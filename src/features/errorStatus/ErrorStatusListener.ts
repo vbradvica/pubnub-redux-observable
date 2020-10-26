@@ -82,7 +82,7 @@ export const createErrorStatusListener = (
 ) => ({
   status: (payload: ErrorStatusResponse) => {
     switch (payload.category) {
-      case ErrorStatusCategory.PN_ACCES_DENIED_CATEGORY:
+      case ErrorStatusCategory.PN_ACCESS_DENIED_CATEGORY:
         dispatch(accessDenied(payload));
         break;
       case ErrorStatusCategory.PN_MALFORMED_RESPONSE_CATEGORY:

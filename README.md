@@ -1,3 +1,6 @@
+# PubNub Redux SDK + Redux Observable
+This is a fork of PubNub Redux SDK that uses redux-observable instead of redux-thunk.
+
 # PubNub Redux SDK
 
 [![Build Status](https://travis-ci.com/pubnub/redux.svg?branch=master)](https://travis-ci.com/pubnub/redux)
@@ -23,7 +26,7 @@ The PubNub Redux SDK includes the following components that you help manage your
 - **Actions**: Preconfigured actions that correspond to PubNub internals 
 - **Reducers**: Configured to respond to the actions dispatched by the PubNub Redux SDK
 - **Listeners**: Monitor subscription notifications and dispatch actions
-- **Commands**: Functions that execute PubNub API calls and dispatch actions
+- **Commands**: Actions that execute PubNub API calls and dispatch actions through epics
 
 ## Supported Features
 
@@ -45,7 +48,7 @@ The PubNub Redux SDK includes the following components that you help manage your
 
 - `pubnub 4.28.3` or later
 - `redux 4.0.4` or later
-- `redux-thunk 2.3.0` or later
+- `redux-observable 1.2.0` or later
 
 # Setup Instructions
 
@@ -70,9 +73,9 @@ In the following instructions, replace the following references with key values 
 
 ```bash
 npm install redux
-npm install redux-thunk
+npm install redux-observable
 npm install pubnub
-npm install pubnub-redux
+npm install pubnub-redux-observable
 ```
 
 ## Configure the Store
@@ -92,7 +95,7 @@ let pubnub = new Pubnub({
 ### Configure Reducers
 
 ```javascript
-let rootReducer = combineReducers(
+let pubnubReducer = combineReducers(
   createNetworkStatusReducer(false),
   createMessageReducer(),
   createPresenceReducer(),
@@ -103,20 +106,27 @@ let rootReducer = combineReducers(
   createMembershipReducer(),
   createChannelMembersReducer(),
 );
+
+let rootReducer = combineReducers({
+  pubnub: pubnubReducer,
+});
 ```
 
 ### Configure Redux Thunk Middleware
 
-The PubNub Redux SDK uses Redux Thunk to manage the interaction with commands that execute PubNub API calls, process the responses, and dispatch Redux actions.
+The PubNub Redux Observable uses Redux Observable to manage the interaction with commands that execute PubNub API calls, process the responses, and dispatch Redux actions.
 
 ```javascript
-let thunkArgument = {
-  pubnub: {
-    api: pubnub
-  }
-};
+  const dependencies: Record<string, unknown> = { pubnub: { api: pubnub } };
 
-let middleware = applyMiddleware(ReduxThunk.withExtraArgument(thunkArgument));
+  // Set state type explicitly to avoid redux-observable TS bug
+  const epicMiddleware = createEpicMiddleware<
+    Action<unknown>,
+    Action<unknown>,
+    any
+  >({ dependencies });
+
+  let middleware = applyMiddleware(epicMiddleware);
 ```
 
 ### Complete the Store Configuration

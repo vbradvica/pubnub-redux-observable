@@ -1,17 +1,25 @@
 {
-  "name": "pubnub-redux",
-  "version": "0.0.12",
+  "name": "@vbradvica/pubnub-redux-observable",
+  "version": "0.0.1",
   "main": "dist/index.js",
-  "module": "dist/pubnub-redux.esm.js",
+  "module": "dist/pubnub-redux-observable.esm.js",
   "typings": "dist/index.d.ts",
   "files": [
     "dist"
   ],
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/vbradvica/pubnub-redux-observable.git"
+  },
   "scripts": {
     "start": "tsdx watch",
     "build": "tsdx build",
     "test": "tsdx test",
-    "lint": "tsdx lint src --fix"
+    "lint": "tsdx lint src --fix",
+    "release": "release-it"
   },
   "devDependencies": {
     "@types/deep-freeze": "^0.1.2",
@@ -26,7 +34,6 @@
     "pubnub": "^4.28.3",
     "redux": "^4.0.4",
     "redux-mock-store": "^1.5.4",
-    "redux-thunk": "^2.3.0",
     "tsdx": "^0.13.2",
     "tslib": "^1.10.0",
     "typescript": "^3.7.3"
@@ -34,7 +41,8 @@
   "peerDependencies": {
     "pubnub": "^4.28.3",
     "redux": "^4.0.4",
-    "redux-thunk": "^2.3.0"
+    "redux-observable": "^1.2.0",
+    "rxjs": "^6.5.0"
   },
   "husky": {
     "hooks": {
@@ -57,5 +65,8 @@
       "<rootDir>/src"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "redux-observable": "^1.2.0",
+    "release-it": "^13.6.6"
+  }
 }

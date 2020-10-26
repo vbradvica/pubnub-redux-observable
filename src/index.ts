@@ -4,115 +4,134 @@ import {
   removeMemberships,
   membershipsRemoved,
   errorRemovingMemberships,
-} from './features/membership/commands/RemoveMemberships';
+  removeMembershipsEpic,
+} from './features/membership/epics/RemoveMemberships';
 import {
   fetchMemberships,
   fetchingMemberships,
   membershipsRetrieved,
   errorFetchingMemberships,
-} from './features/membership/commands/FetchMemberships';
+  fetchMembershipsEpic,
+} from './features/membership/epics/FetchMemberships';
 import {
   setMemberships,
   settingMemberships,
   membershipsSet,
   errorSettingMemberships,
-} from './features/membership/commands/SetMemberships';
+  setMembershipsEpic,
+} from './features/membership/epics/SetMemberships';
 import {
   fetchChannelMembers,
   fetchingChannelMembers,
   channelMembersRetrieved,
   errorFetchingChannelMembers,
-} from './features/members/commands/FetchChannelMembers';
+  fetchChannelMembersEpic,
+} from './features/members/epics/FetchChannelMembers';
 import {
   setChannelMembers,
   settingChannelMembers,
   channelMembersSet,
   errorSettingChannelMembers,
-} from './features/members/commands/SetChannelMembers';
+  setChannelMembersEpic,
+} from './features/members/epics/SetChannelMembers';
 import {
   removeChannelMembers,
   removingChannelMembers,
   channelMembersRemoved,
   errorRemovingChannelMembers,
-} from './features/members/commands/RemoveChannelMembers';
+  removeChannelMembersEpic,
+} from './features/members/epics/RemoveChannelMembers';
 import {
   sendMessage,
   sendingMessage,
   messageSent,
   errorSendingMessage,
-} from './features/message/commands/SendMessage';
+  sendMessageEpic,
+} from './features/message/epics/SendMessage';
 import {
   sendSignal,
   sendingSignal,
   signalSent,
   errorSendingSignal,
-} from './features/signal/commands/SendSignal';
+  sendSignalEpic,
+} from './features/signal/epics/SendSignal';
 import {
   fetchMessageHistory,
   fetchingMessageHistory,
   messageHistoryRetrieved,
   errorFetchingMessageHistory,
-} from './features/message/commands/FetchMessageHistory';
+  fetchMessageHistoryEpic,
+} from './features/message/epics/FetchMessageHistory';
 import {
   removeChannelData,
   removingChannelData,
   channelDataRemoved,
   errorRemovingChannelData,
-} from './features/channel/commands/RemoveChannelData';
+  removeChannelDataEpic,
+} from './features/channel/epics/RemoveChannelData';
 import {
   fetchChannelData,
   fetchingChannelData,
   channelDataRetrieved,
   errorFetchingChannelData,
-} from './features/channel/commands/FetchChannelData';
+  fetchChannelDataEpic,
+} from './features/channel/epics/FetchChannelData';
 import {
   fetchAllChannelData,
   fetchingAllChannelData,
   allChannelDataRetrieved,
   errorFetchingAllChannelData,
-} from './features/channel/commands/FetchAllChannelData';
+  fetchAllChannelDataEpic,
+} from './features/channel/epics/FetchAllChannelData';
 import {
   setChannelData,
   settingChannelData,
   channelDataSet,
   errorSettingChannelData,
-} from './features/channel/commands/SetChannelData';
+  setChannelDataEpic,
+} from './features/channel/epics/SetChannelData';
 import {
   removeUserData,
   removingUserData,
   UserDataRemoved,
   errorRemovingUserData,
-} from './features/user/commands/RemoveUserData';
+  removeUserDataEpic,
+} from './features/user/epics/RemoveUserData';
 import {
   fetchUserData,
   fetchingUserData,
   UserDataRetrieved,
   errorFetchingUserData,
-} from './features/user/commands/FetchUserData';
+  fetchUserDataEpic,
+} from './features/user/epics/FetchUserData';
 import {
   fetchAllUserData,
   fetchingAllUserData,
   allUserDataRetrieved,
   errorFetchingAllUserData,
-} from './features/user/commands/FetchAllUserData';
+  fetchAllUserDataEpic,
+} from './features/user/epics/FetchAllUserData';
 import {
   setUserData,
   settingUserData,
   UserDataSet,
   errorSettingUserData,
-} from './features/user/commands/SetUserData';
+  setUserDataEpic,
+} from './features/user/epics/SetUserData';
 import {
   fetchHereNow,
   fetchingHereNow,
   hereNowRetrieved,
   errorFetchingHereNow,
-} from './features/presence/commands/FetchHereNow';
+  fetchHereNowEpic,
+} from './features/presence/epics/FetchHereNow';
 import {
   fetchPresenceState,
   fetchingPresenceState,
   presenceStateRetrieved,
   errorFetchingPresenceState,
-} from './features/presence/commands/FetchPresenceState';
+  fetchPresenceStateEpic,
+} from './features/presence/epics/FetchPresenceState';
 // Listeners
 import { createUserDataListener } from './features/user/UserDataListener';
 import { createChannelDataListener } from './features/channel/ChannelDataListener';
@@ -233,6 +252,26 @@ export {
   fetchingPresenceState,
   presenceStateRetrieved,
   errorFetchingPresenceState,
+  // Epics
+  removeMembershipsEpic,
+  fetchMembershipsEpic,
+  setMembershipsEpic,
+  fetchChannelMembersEpic,
+  setChannelMembersEpic,
+  removeChannelMembersEpic,
+  sendMessageEpic,
+  sendSignalEpic,
+  fetchMessageHistoryEpic,
+  fetchHereNowEpic,
+  fetchPresenceStateEpic,
+  removeChannelDataEpic,
+  fetchAllChannelDataEpic,
+  fetchAllUserDataEpic,
+  fetchChannelDataEpic,
+  fetchUserDataEpic,
+  removeUserDataEpic,
+  setChannelDataEpic,
+  setUserDataEpic,
   // Listeners
   createPubNubListener,
   createMembershipListener,

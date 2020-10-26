@@ -1,3 +1,4 @@
+// mapped to EpicTypes.ts
 import Pubnub from 'pubnub';
 
 /**

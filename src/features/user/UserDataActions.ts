@@ -87,6 +87,12 @@ export interface DeleteUserDataError {
   status: Pubnub.PubnubStatus;
 }
 
+export interface FetchAllUserDataCommand<Meta extends ActionMeta> {
+  type: typeof UserDataActionType.FETCHING_ALL_USER_DATA;
+  payload: FetchAllUserDataRequest;
+  meta?: Meta;
+}
+
 export interface FetchingAllUserDataAction<Meta extends ActionMeta> {
   type: typeof UserDataActionType.FETCHING_ALL_USER_DATA;
   payload: FetchAllUserDataRequest;

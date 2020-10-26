@@ -1,0 +1,9 @@
+# tests
+**.test.**
+**setupTests**
+
+# package directories
+node_modules
+
+# reports
+stats.json
