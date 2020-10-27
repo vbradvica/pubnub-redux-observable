@@ -19,7 +19,7 @@
     "build": "tsdx build",
     "test": "tsdx test",
     "lint": "tsdx lint src --fix",
-    "release": "release-it"
+    "release": "tsdx build && release-it"
   },
   "devDependencies": {
     "@types/deep-freeze": "^0.1.2",
