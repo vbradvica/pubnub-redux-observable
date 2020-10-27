@@ -15,11 +15,12 @@
     "url": "git://github.com/vbradvica/pubnub-redux-observable.git"
   },
   "scripts": {
-    "start": "tsdx watch",
     "build": "tsdx build",
-    "test": "tsdx test",
+    "clean": "rimraf lib/* && rimraf dist/*",
     "lint": "tsdx lint src --fix",
-    "release": "release-it"
+    "release": "release-it",
+    "start": "tsdx watch",
+    "test": "tsdx test"
   },
   "devDependencies": {
     "@types/deep-freeze": "^0.1.2",

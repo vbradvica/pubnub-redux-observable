@@ -5,7 +5,7 @@ import Pubnub, {
   StatusEvent,
   ObjectsEvent,
 } from 'pubnub';
-import { Dispatch } from 'redux';
+import { Subscriber } from 'rxjs';
 import { createPresenceListener } from '../presence/PresenceListener';
 import {
   createNetworkStatusListener,
@@ -64,7 +64,7 @@ export const createPubNubListener = <
   ChannelType extends Channel,
   MembershipCustom extends ObjectsCustom
 >(
-  dispatch: Dispatch<
+  observer: Subscriber<
     ListenerActions<
       MessageType,
       SignalType,
@@ -75,15 +75,15 @@ export const createPubNubListener = <
   >
 ) =>
   combineListeners(
-    createMessageListener<MessageType>(dispatch),
-    createPresenceListener(dispatch),
-    createSignalListener(dispatch),
-    createUserDataListener<UserCustom>(dispatch),
-    createChannelDataListener<ChannelType>(dispatch),
-    createMembershipListener<MembershipCustom>(dispatch),
-    createNetworkStatusListener(dispatch),
-    createSubscriptionStatusListener(dispatch),
-    createErrorStatusListener(dispatch)
+    createMessageListener<MessageType>(observer),
+    createPresenceListener(observer),
+    createSignalListener(observer),
+    createUserDataListener<UserCustom>(observer),
+    createChannelDataListener<ChannelType>(observer),
+    createMembershipListener<MembershipCustom>(observer),
+    createNetworkStatusListener(observer),
+    createSubscriptionStatusListener(observer),
+    createErrorStatusListener(observer)
   );
 
 /**
