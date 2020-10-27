@@ -23,10 +23,8 @@ export const pubnubLifecycleEpic: Epic = (
     ofType(LifecycleActionType.INITIALIZE),
     map((action: PayloadAction<PubnubConfig>) => action),
     mergeMap((action) => {
-      if (pubnub === undefined) {
-        pubnub = {
-          api: new Pubnub(action.payload),
-        };
+      if (pubnub.api === undefined) {
+        pubnub.api = new Pubnub(action.payload);
 
         return new Observable((observer) => {
           pubnub.api?.addListener(createPubNubListener(observer));
