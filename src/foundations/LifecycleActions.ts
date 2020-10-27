@@ -29,7 +29,7 @@ export const pubnubLifecycleEpic: Epic = (
         };
 
         return new Observable((observer) => {
-          pubnub.api.addListener(createPubNubListener(observer));
+          pubnub.api?.addListener(createPubNubListener(observer));
         }).pipe(
           map((action) => action),
           catchError((error) => of(error))

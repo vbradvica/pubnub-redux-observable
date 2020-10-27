@@ -5,6 +5,6 @@ import Pubnub from 'pubnub';
  */
 export interface PubnubEpicDependencies {
   pubnub: {
-    api: Pubnub;
+    api?: Pubnub;
   };
 }
