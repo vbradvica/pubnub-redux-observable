@@ -137,7 +137,7 @@ import { commandsEpic } from './features';
 import { createUserDataListener } from './features/user/UserDataListener';
 import { createChannelDataListener } from './features/channel/ChannelDataListener';
 import { createMembershipListener } from './features/membership/MembershipListener';
-import { createPubNubListener } from './features/helpers/PubNubListener';
+import { createPubNubListener } from './features/subscribe/createPubNubListener';
 import { createMessageListener } from './features/message/MessageListener';
 import { createPresenceListener } from './features/presence/PresenceListener';
 import { createSignalListener } from './features/signal/SignalListener';

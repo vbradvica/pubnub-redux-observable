@@ -5,7 +5,7 @@ import Pubnub, { PubnubConfig } from 'pubnub';
 import { PubnubEpicDependencies } from 'foundations/EpicTypes';
 import { PayloadAction } from './createAction';
 import { LifecycleActionType } from './LifecycleActionType.enum';
-import { createPubNubListener } from 'features/helpers/PubNubListener';
+import { createPubNubListener } from '../features/subscribe/createPubNubListener';
 
 export const setupPubnub = (
   payload: PubnubConfig
