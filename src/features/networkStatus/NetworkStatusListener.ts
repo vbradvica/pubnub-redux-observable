@@ -1,4 +1,4 @@
-import { Dispatch } from 'redux';
+import { Subscriber } from 'rxjs';
 import {
   NetworkUpEventAction,
   NetworkDownEventAction,
@@ -20,24 +20,24 @@ export type NetworkStatusListenerActions =
   | NetworkDownEventAction;
 
 export const createNetworkStatusListener = (
-  dispatch: Dispatch<NetworkStatusListenerActions>
+  observer: Subscriber<NetworkStatusListenerActions>
 ) => ({
   status: (payload: NetworkStatusResponse) => {
     switch (payload.category) {
       case NetworkStatusCategory.PN_NETWORK_UP_CATEGORY:
-        dispatch(networkUp());
+        observer.next(networkUp());
         break;
       case NetworkStatusCategory.PN_NETWORK_DOWN_CATEGORY:
-        dispatch(networkDown());
+        observer.next(networkDown());
         break;
       case NetworkStatusCategory.PN_RECONNECTED_CATEGORY:
-        dispatch(networkUp());
+        observer.next(networkUp());
         break;
       case NetworkStatusCategory.PN_CONNECTED_CATEGORY:
-        dispatch(networkUp());
+        observer.next(networkUp());
         break;
       case NetworkStatusCategory.PN_TIMEOUT_CATEGORY:
-        dispatch(networkDown());
+        observer.next(networkDown());
         break;
       default:
         break;

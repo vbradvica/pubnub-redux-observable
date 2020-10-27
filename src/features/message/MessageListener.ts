@@ -1,5 +1,5 @@
 import Pubnub from 'pubnub';
-import { Dispatch } from 'redux';
+import { Subscriber } from 'rxjs';
 import { MessageReceivedAction, Message } from './MessageActions';
 import { MessageActionType } from './MessageActionType.enum';
 
@@ -11,8 +11,10 @@ export const messageReceived = <MessageType extends Message>(
 });
 
 export const createMessageListener = <MessageType extends Message>(
-  dispatch: Dispatch<MessageReceivedAction<MessageType>>
+  observer: Subscriber<MessageReceivedAction<MessageType>>
 ): Pubnub.ListenerParameters => ({
   message: (payload) =>
-    dispatch(messageReceived<MessageType>((payload as unknown) as MessageType)),
+    observer.next(
+      messageReceived<MessageType>((payload as unknown) as MessageType)
+    ),
 });

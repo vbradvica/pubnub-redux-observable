@@ -1,5 +1,5 @@
 import Pubnub from 'pubnub';
-import { Dispatch } from 'redux';
+import { Subscriber } from 'rxjs';
 import { SignalReceivedAction, Signal } from './SignalActions';
 import { SignalActionType } from './SignalActionType.enum';
 
@@ -11,8 +11,10 @@ export const signalReceived = <SignalType extends Signal>(
 });
 
 export const createSignalListener = <SignalType extends Signal>(
-  dispatch: Dispatch<SignalReceivedAction<SignalType>>
+  observer: Subscriber<SignalReceivedAction<SignalType>>
 ): Pubnub.ListenerParameters => ({
   signal: (payload) =>
-    dispatch(signalReceived<SignalType>((payload as unknown) as SignalType)),
+    observer.next(
+      signalReceived<SignalType>((payload as unknown) as SignalType)
+    ),
 });

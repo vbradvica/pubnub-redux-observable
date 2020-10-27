@@ -1,4 +1,4 @@
-import { Dispatch } from 'redux';
+import { Subscriber } from 'rxjs';
 import { ErrorStatusCategory } from './ErrorStatusCategory.enum';
 import { ErrorStatusActionType } from './ErrorStatusActionType.enum';
 import {
@@ -78,27 +78,27 @@ export type ErrorStatusListenerActions =
   | UnknownEventAction;
 
 export const createErrorStatusListener = (
-  dispatch: Dispatch<ErrorStatusListenerActions>
+  observer: Subscriber<ErrorStatusListenerActions>
 ) => ({
   status: (payload: ErrorStatusResponse) => {
     switch (payload.category) {
       case ErrorStatusCategory.PN_ACCESS_DENIED_CATEGORY:
-        dispatch(accessDenied(payload));
+        observer.next(accessDenied(payload));
         break;
       case ErrorStatusCategory.PN_MALFORMED_RESPONSE_CATEGORY:
-        dispatch(malformedResponse(payload));
+        observer.next(malformedResponse(payload));
         break;
       case ErrorStatusCategory.PN_BAD_REQUEST_CATEGORY:
-        dispatch(badRequest(payload));
+        observer.next(badRequest(payload));
         break;
       case ErrorStatusCategory.PN_DECRYPTION_ERROR_CATEGORY:
-        dispatch(decryptionError(payload));
+        observer.next(decryptionError(payload));
         break;
       case ErrorStatusCategory.PN_REQUEST_MESSAGE_COUNT_EXCEEDED_CATEGORY:
-        dispatch(requestMessageCountExceeded(payload));
+        observer.next(requestMessageCountExceeded(payload));
         break;
       case ErrorStatusCategory.PN_UNKNOWN_CATEGORY:
-        dispatch(unknown(payload));
+        observer.next(unknown(payload));
         break;
       default:
         break;

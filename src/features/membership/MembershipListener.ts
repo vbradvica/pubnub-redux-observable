@@ -1,5 +1,5 @@
+import { Subscriber } from 'rxjs';
 import Pubnub from 'pubnub';
-import { Dispatch } from 'redux';
 import {
   MembershipListenerActions,
   MembershipSetEventAction,
@@ -27,20 +27,20 @@ const membershipRemovedEventRecieved = (
 export const createMembershipListener = <
   MembershipCustom extends ObjectsCustom
 >(
-  dispatch: Dispatch<MembershipListenerActions<MembershipCustom>>
+  observer: Subscriber<MembershipListenerActions<MembershipCustom>>
 ): Pubnub.ListenerParameters => ({
   objects: (payload) => {
     if (payload.message.type === 'membership') {
       switch (payload.message.event) {
         case 'set':
-          dispatch(
+          observer.next(
             membershipSetEventRecieved<MembershipCustom>(
               (payload as Pubnub.SetMembershipEvent<MembershipCustom>).message
             )
           );
           break;
         case 'delete':
-          dispatch(membershipRemovedEventRecieved(payload.message));
+          observer.next(membershipRemovedEventRecieved(payload.message));
           break;
         default:
           break;

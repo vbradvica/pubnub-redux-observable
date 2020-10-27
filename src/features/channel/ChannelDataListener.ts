@@ -1,5 +1,5 @@
 import Pubnub from 'pubnub';
-import { Dispatch } from 'redux';
+import { Subscriber } from 'rxjs';
 import {
   ChannelDataSetEventAction,
   ChannelDataRemovedEventAction,
@@ -25,7 +25,9 @@ export const channelDataRemoved = <ChannelCustom extends ObjectsCustom>(
 });
 
 export const createChannelDataListener = <ChannelType extends Channel>(
-  dispatch: Dispatch<ChannelDataListenerActions<GetChannelCustom<ChannelType>>>
+  observer: Subscriber<
+    ChannelDataListenerActions<GetChannelCustom<ChannelType>>
+  >
 ) => ({
   objects: (
     payload: Pubnub.ObjectsEvent<
@@ -39,12 +41,12 @@ export const createChannelDataListener = <ChannelType extends Channel>(
     }
     switch (payload.message.event) {
       case 'set':
-        dispatch(
+        observer.next(
           channelDataSet<GetChannelCustom<ChannelType>>(payload.message)
         );
         break;
       case 'delete':
-        dispatch(
+        observer.next(
           channelDataRemoved<GetChannelCustom<ChannelType>>(payload.message)
         );
         break;

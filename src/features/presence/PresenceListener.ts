@@ -1,4 +1,4 @@
-import { Dispatch } from 'redux';
+import { Subscriber } from 'rxjs';
 import Pubnub from 'pubnub';
 import {
   PresenceListenerActions,
@@ -36,21 +36,21 @@ export const userStateChange = (
 });
 
 export const createPresenceListener = (
-  dispatch: Dispatch<PresenceListenerActions>
+  observer: Subscriber<PresenceListenerActions>
 ): Pubnub.ListenerParameters => ({
   presence: (payload) => {
     switch (payload.action) {
       case PresenceCategory.JOIN:
-        dispatch(userJoin(payload));
+        observer.next(userJoin(payload));
         break;
       case PresenceCategory.LEAVE:
-        dispatch(userLeave(payload));
+        observer.next(userLeave(payload));
         break;
       case PresenceCategory.TIMEOUT:
-        dispatch(userTimeout(payload));
+        observer.next(userTimeout(payload));
         break;
       case PresenceCategory.STATE_CHANGE:
-        dispatch(userStateChange(payload));
+        observer.next(userStateChange(payload));
         break;
       default:
         break;

@@ -1,4 +1,4 @@
-import { Dispatch } from 'redux';
+import { Subscriber } from 'rxjs';
 import {
   ReconnectedAction,
   ConnectedAction,
@@ -26,15 +26,15 @@ export type SubscriptionStatusListenerActions =
   | ConnectedAction;
 
 export const createSubscriptionStatusListener = (
-  dispatch: Dispatch<SubscriptionStatusListenerActions>
+  observer: Subscriber<SubscriptionStatusListenerActions>
 ) => ({
   status: (payload: SubscriptionStatusResponse) => {
     switch (payload.category) {
       case SubscriptionStatusCategory.PN_CONNECTED_CATEGORY:
-        dispatch(connected(payload));
+        observer.next(connected(payload));
         break;
       case SubscriptionStatusCategory.PN_RECONNECTED_CATEGORY:
-        dispatch(reconnected(payload));
+        observer.next(reconnected(payload));
         break;
       default:
         break;

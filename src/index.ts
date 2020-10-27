@@ -132,6 +132,7 @@ import {
   errorFetchingPresenceState,
   fetchPresenceStateEpic,
 } from './features/presence/epics/FetchPresenceState';
+import { commandsEpic } from './features';
 // Listeners
 import { createUserDataListener } from './features/user/UserDataListener';
 import { createChannelDataListener } from './features/channel/ChannelDataListener';
@@ -206,8 +207,18 @@ import { SubscriptionStatusActionType } from './features/subscriptionStatus/Subs
 import { NetworkStatusActionType } from './features/networkStatus/NetworkStatusActionType.enum';
 import { ErrorStatusActionType } from './features/errorStatus/ErrorStatusActionType.enum';
 import { PresenceCategory } from './features/presence/PresenceCategory.enum';
+// LifeCycle
+import { LifecycleActionType } from './foundations/LifecycleActionType.enum';
+import {
+  pubnubLifecycleEpic,
+  setupPubnub,
+} from './foundations/LifecycleActions';
 
 export {
+  // Lifecycle
+  LifecycleActionType,
+  pubnubLifecycleEpic,
+  setupPubnub,
   // Commands
   removeMemberships,
   removingMemberships,
@@ -254,6 +265,7 @@ export {
   presenceStateRetrieved,
   errorFetchingPresenceState,
   // Epics
+  commandsEpic,
   removeMembershipsEpic,
   fetchMembershipsEpic,
   setMembershipsEpic,

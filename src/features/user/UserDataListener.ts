@@ -1,5 +1,5 @@
 import Pubnub from 'pubnub';
-import { Dispatch } from 'redux';
+import { Subscriber } from 'rxjs';
 import {
   UserDataSetEventAction,
   UserDataRemovedEventAction,
@@ -27,7 +27,7 @@ export const UserDataRemoved = <UserCustom extends ObjectsCustom>(
 export const createUserDataListener = <
   UserCustom extends ObjectsCustom = ObjectsCustom
 >(
-  dispatch: Dispatch<UserDataListenerActions<UserCustom>>
+  observer: Subscriber<UserDataListenerActions<UserCustom>>
 ): Pubnub.ListenerParameters => ({
   objects: (payload) => {
     if (payload.message.type !== 'uuid') {
@@ -35,14 +35,14 @@ export const createUserDataListener = <
     }
     switch (payload.message.event) {
       case 'set':
-        dispatch(
+        observer.next(
           UserDataSet<UserCustom>(
             ((payload as unknown) as UsersListenerPayload<UserCustom>).message
           )
         );
         break;
       case 'delete':
-        dispatch(UserDataRemoved<UserCustom>(payload.message));
+        observer.next(UserDataRemoved<UserCustom>(payload.message));
         break;
       default:
         break;
