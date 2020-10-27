@@ -10,7 +10,7 @@ import { UserDataActionType } from '../UserDataActionType.enum';
 import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
 import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicTypes';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
@@ -63,7 +63,7 @@ export const removeUserDataEpic: Epic = (
         new Observable((observer) => {
           observer.next(removingUserData(action.payload, action.meta));
 
-          pubnub.api.objects.removeUUIDMetadata(
+          pubnub.api?.objects.removeUUIDMetadata(
             { uuid: action.payload.uuid },
             (status) => {
               if (status.error) {

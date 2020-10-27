@@ -10,7 +10,7 @@ import { MessageActionType } from '../MessageActionType.enum';
 import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
 import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicTypes';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
@@ -84,7 +84,7 @@ export const sendMessageEpic: Epic = (
         new Observable((observer) => {
           observer.next(sendingMessage(action.payload, action.meta));
 
-          pubnub.api.publish(
+          pubnub.api?.publish(
             {
               ...action.payload,
             },

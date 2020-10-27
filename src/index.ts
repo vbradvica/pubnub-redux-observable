@@ -190,7 +190,10 @@ import {
 } from './features/presence/PresenceActions';
 import { ActionMeta } from './foundations/ActionMeta';
 import { PubnubThunkContext } from './foundations/ThunkTypes';
-import { PubnubEpicDependencies } from './foundations/EpicTypes';
+import {
+  PubnubEpicDependencies,
+  createEpicDependency,
+} from './foundations/EpicDependency';
 // Response Types
 import { ErrorStatusResponse } from './features/errorStatus/ErrorStatusActions';
 import { NetworkStatusResponse } from './features/networkStatus/NetworkStatusActions';
@@ -355,6 +358,7 @@ export {
   reconnected,
   PubnubThunkContext,
   PubnubEpicDependencies,
+  createEpicDependency,
   ActionMeta,
   Channel,
   UserData,

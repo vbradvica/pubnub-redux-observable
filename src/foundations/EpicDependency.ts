@@ -8,3 +8,9 @@ export interface PubnubEpicDependencies {
     api?: Pubnub;
   };
 }
+
+export const createEpicDependency = (): PubnubEpicDependencies => ({
+  pubnub: {
+    api: undefined,
+  },
+});

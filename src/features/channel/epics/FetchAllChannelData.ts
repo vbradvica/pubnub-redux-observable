@@ -11,7 +11,7 @@ import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
 import { ObjectsCustom } from 'foundations/ObjectsCustom';
 import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicTypes';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 
@@ -67,7 +67,7 @@ export const fetchAllChannelDataEpic: Epic = (
         new Observable((observer) => {
           observer.next(fetchingAllChannelData(action.payload, action.meta));
 
-          pubnub.api.objects.getAllChannelMetadata(
+          pubnub.api?.objects.getAllChannelMetadata(
             {
               ...action.payload,
             },

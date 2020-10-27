@@ -10,7 +10,7 @@ import { PresenceActionType } from '../PresenceActionType.enum';
 import { ActionMeta } from 'foundations/ActionMeta';
 import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicTypes';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
@@ -61,7 +61,7 @@ export const fetchHereNowEpic: Epic = (
       new Observable((observer) => {
         observer.next(fetchingHereNow(action.payload, action.meta));
 
-        pubnub.api.hereNow(
+        pubnub.api?.hereNow(
           {
             ...action.payload,
             includeUUIDs: true,

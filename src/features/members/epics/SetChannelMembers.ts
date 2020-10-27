@@ -13,7 +13,7 @@ import { PayloadAction } from 'foundations/createAction';
 import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicTypes';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 
 export const settingChannelMembers = <
   UserCustom extends ObjectsCustom,
@@ -83,7 +83,7 @@ export const setChannelMembersEpic: Epic = (
         new Observable((observer) => {
           observer.next(settingChannelMembers(action.payload, action.meta));
 
-          pubnub.api.objects.setChannelMembers(
+          pubnub.api?.objects.setChannelMembers(
             {
               ...action.payload,
             },

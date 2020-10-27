@@ -2,7 +2,7 @@ import { Epic, ofType } from 'redux-observable';
 import { EMPTY, Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import Pubnub, { PubnubConfig } from 'pubnub';
-import { PubnubEpicDependencies } from 'foundations/EpicTypes';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { PayloadAction } from './createAction';
 import { LifecycleActionType } from './LifecycleActionType.enum';
 import { createPubNubListener } from '../features/subscribe/createPubNubListener';

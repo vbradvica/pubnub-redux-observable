@@ -12,7 +12,7 @@ import { ActionMeta } from 'foundations/ActionMeta';
 import Pubnub from 'pubnub';
 import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicTypes';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
@@ -67,7 +67,7 @@ export const fetchMessageHistoryEpic: Epic = (
         new Observable((observer) => {
           observer.next(fetchingMessageHistory(action.payload, action.meta));
 
-          pubnub.api.history(
+          pubnub.api?.history(
             {
               ...(action.payload as Pubnub.HistoryParameters),
             },

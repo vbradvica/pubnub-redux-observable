@@ -9,7 +9,7 @@ import {
 import { ChannelDataActionType } from '../ChannelDataActionType.enum';
 import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicTypes';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { PayloadAction } from 'foundations/createAction';
 import { Observable, of } from 'rxjs';
@@ -63,7 +63,7 @@ export const removeChannelDataEpic: Epic = (
         new Observable((observer) => {
           observer.next(removingChannelData(action.payload, action.meta));
 
-          pubnub.api.objects.removeChannelMetadata(
+          pubnub.api?.objects.removeChannelMetadata(
             { channel: action.payload.channel },
             (status) => {
               if (status.error) {
