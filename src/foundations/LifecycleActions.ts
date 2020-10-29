@@ -14,6 +14,13 @@ export const setupPubnub = (
   payload,
 });
 
+export const pubnubInitialized = (
+  payload: PubnubConfig
+): PayloadAction<PubnubConfig> => ({
+  type: LifecycleActionType.INITIALIZED,
+  payload,
+});
+
 export const pubnubLifecycleEpic: Epic = (
   action$,
   _,
@@ -28,6 +35,7 @@ export const pubnubLifecycleEpic: Epic = (
 
         return new Observable((observer) => {
           pubnub.api?.addListener(createPubNubListener(observer));
+          observer.next(pubnubInitialized(action.payload));
         }).pipe(
           map((action) => action),
           catchError((error) => of(error))

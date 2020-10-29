@@ -16,7 +16,6 @@ export const createPubNubListener = (observer: Subscriber<any>) =>
     createPresenceListener(observer),
     createSignalListener(observer),
     createErrorStatusListener(observer),
-    createErrorStatusListener(observer),
     createNetworkStatusListener(observer),
     createSubscriptionStatusListener(observer),
     createUserDataListener(observer),

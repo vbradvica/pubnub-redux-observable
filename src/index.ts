@@ -91,6 +91,13 @@ import {
   setChannelDataEpic,
 } from './features/channel/epics/SetChannelData';
 import {
+  subscribeToChannel,
+  subscribingChannel,
+  channelSubscribed,
+  errorSubscribingChannel,
+  subscribeToChannelEpic,
+} from './features/channel/epics/SubscribeToChannel';
+import {
   removeUserData,
   removingUserData,
   UserDataRemoved,
@@ -203,6 +210,7 @@ import { SignalActionType } from './features/signal/SignalActionType.enum';
 import { MessageActionType } from './features/message/MessageActionType.enum';
 import { PresenceActionType } from './features/presence/PresenceActionType.enum';
 import { UserDataActionType } from './features/user/UserDataActionType.enum';
+import { ChannelActionType } from './features/channel/ChannelActionType.enum';
 import { ChannelDataActionType } from './features/channel/ChannelDataActionType.enum';
 import { MembershipActionType } from './features/membership/MembershipActionType.enum';
 import { ChannelMembersActionType } from './features/members/ChannelMembersActionType.enum';
@@ -223,6 +231,7 @@ export {
   pubnubLifecycleEpic,
   setupPubnub,
   // Commands
+  subscribeToChannel,
   removeMemberships,
   removingMemberships,
   membershipsRemoved,
@@ -268,6 +277,7 @@ export {
   presenceStateRetrieved,
   errorFetchingPresenceState,
   // Epics
+  subscribeToChannelEpic,
   commandsEpic,
   removeMembershipsEpic,
   fetchMembershipsEpic,
@@ -301,6 +311,9 @@ export {
   createUserDataListener,
   combineListeners,
   // Action Creators
+  subscribingChannel,
+  errorSubscribingChannel,
+  channelSubscribed,
   removeChannelData,
   removingChannelData,
   channelDataRemoved,
@@ -377,6 +390,7 @@ export {
   MessageActionType,
   PresenceActionType,
   UserDataActionType,
+  ChannelActionType,
   ChannelDataActionType,
   MembershipActionType,
   ChannelMembersActionType,
