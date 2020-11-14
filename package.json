@@ -1,6 +1,6 @@
 {
   "name": "@vbradvica/pubnub-redux-observable",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "main": "dist/index.js",
   "module": "dist/pubnub-redux-observable.esm.js",
   "typings": "dist/index.d.ts",
