@@ -100,6 +100,12 @@ import {
   pubnubLifecycleEpic,
   setupPubnub,
 } from './foundations/LifecycleActions';
+import {
+  createEpicDependency,
+  PubnubEpicDependencies,
+} from './foundations/EpicDependency';
+
+export { MessageReceivedAction } from 'pubnub-redux/dist/features/message/MessageActions';
 
 export {
   // Commands
@@ -279,4 +285,7 @@ export {
   setUserData,
   // Action Types
   ChannelActionType,
+  // Epics
+  createEpicDependency,
+  PubnubEpicDependencies,
 };
