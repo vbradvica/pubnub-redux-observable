@@ -1,7 +1,8 @@
 import Pubnub from 'pubnub';
-import { UserDataActionType } from '../UserDataActionType.enum';
 import { fetchUserData, fetchUserDataEpic } from './FetchUserData';
 import { createMockStore } from 'foundations/Test-utils';
+
+import { UserDataActionType } from 'pubnub-redux';
 
 function fixturePubnubFetchUserSuccess() {
   const pubnub = {

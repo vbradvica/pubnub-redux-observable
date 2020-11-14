@@ -1,39 +1,14 @@
 import { Subscriber } from 'rxjs';
 import Pubnub from 'pubnub';
+
+import { PresenceCategory } from 'pubnub-redux';
+import { PresenceListenerActions } from 'pubnub-redux/dist/features/presence/PresenceActions';
 import {
-  PresenceListenerActions,
-  JoinEventAction,
-  LeaveEventAction,
-  TimeoutEventAction,
-  StateChangeEventAction,
-  PresenceEventMessage,
-} from './PresenceActions';
-import { PresenceActionType } from './PresenceActionType.enum';
-import { PresenceCategory } from './PresenceCategory.enum';
-
-export const userJoin = (payload: PresenceEventMessage): JoinEventAction => ({
-  type: PresenceActionType.JOIN_EVENT,
-  payload,
-});
-
-export const userLeave = (payload: PresenceEventMessage): LeaveEventAction => ({
-  type: PresenceActionType.LEAVE_EVENT,
-  payload,
-});
-
-export const userTimeout = (
-  payload: PresenceEventMessage
-): TimeoutEventAction => ({
-  type: PresenceActionType.TIMEOUT_EVENT,
-  payload,
-});
-
-export const userStateChange = (
-  payload: PresenceEventMessage
-): StateChangeEventAction => ({
-  type: PresenceActionType.STATE_CHANGE_EVENT,
-  payload,
-});
+  userJoin,
+  userLeave,
+  userStateChange,
+  userTimeout,
+} from 'pubnub-redux/dist/features/presence/PresenceListener';
 
 export const createPresenceListener = (
   observer: Subscriber<PresenceListenerActions>

@@ -1,6 +1,6 @@
 import Pubnub from 'pubnub';
 import { fetchMemberships, fetchMembershipsEpic } from './FetchMemberships';
-import { MembershipActionType } from '../MembershipActionType.enum';
+import { MembershipActionType } from 'pubnub-redux';
 import { createMockStore } from 'foundations/Test-utils';
 
 function fixturePubnubFetchMembershipsSuccess() {

@@ -1,5 +1,5 @@
 import Pubnub from 'pubnub';
-import { ChannelMembersActionType } from '../ChannelMembersActionType.enum';
+import { ChannelMembersActionType } from 'pubnub-redux';
 import { setChannelMembers, setChannelMembersEpic } from './SetChannelMembers';
 import { createMockStore } from 'foundations/Test-utils';
 

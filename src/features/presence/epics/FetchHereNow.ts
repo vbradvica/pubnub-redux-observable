@@ -1,47 +1,20 @@
-import {
-  HereNowRequest,
-  HereNowError,
-  FetchingHereNowAction,
-  ErrorFetchingHereNowAction,
-  HereNowRetrievedAction,
-  HereNowSuccess,
-} from '../PresenceActions';
-import { PresenceActionType } from '../PresenceActionType.enum';
-import { ActionMeta } from 'foundations/ActionMeta';
-import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-export const fetchingHereNow = <Meta extends ActionMeta>(
-  payload: HereNowRequest,
-  meta?: Meta
-): FetchingHereNowAction<Meta> => ({
-  type: PresenceActionType.FETCHING_HERE_NOW,
-  payload,
-  meta,
-});
+import {
+  ActionMeta,
+  errorFetchingHereNow,
+  fetchingHereNow,
+  HereNowRequest,
+  hereNowRetrieved,
+  PresenceActionType,
+} from 'pubnub-redux';
 
-export const hereNowRetrieved = <Meta extends ActionMeta>(
-  payload: HereNowSuccess,
-  meta?: Meta
-): HereNowRetrievedAction<Meta> => ({
-  type: PresenceActionType.HERE_NOW_RETRIEVED,
-  payload,
-  meta,
-});
+import { PayloadAction } from '../../../foundations/createAction';
+import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
 
-export const errorFetchingHereNow = <Meta extends ActionMeta>(
-  payload: HereNowError,
-  meta?: Meta
-): ErrorFetchingHereNowAction<Meta> => ({
-  type: PresenceActionType.ERROR_FETCHING_HERE_NOW,
-  payload,
-  meta,
-});
-
-export const fetchHereNow = <Meta extends ActionMeta>(
+export const fetchHereNow = <Meta extends ActionMeta = {}>(
   request: HereNowRequest,
   meta: Meta
 ): PayloadAction<HereNowRequest, string, ActionMeta> => ({

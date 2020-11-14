@@ -1,5 +1,5 @@
 import Pubnub from 'pubnub';
-import { MembershipActionType } from '../MembershipActionType.enum';
+import { MembershipActionType } from 'pubnub-redux';
 import { setMemberships, setMembershipsEpic } from './SetMemberships';
 import { createMockStore } from 'foundations/Test-utils';
 

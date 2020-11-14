@@ -1,52 +1,20 @@
-import {
-  ErrorFetchingAllUserDataAction,
-  AllUserDataRetrievedAction,
-  FetchingAllUserDataAction,
-  FetchAllUserDataError,
-  FetchAllUserDataSuccess,
-  FetchAllUserDataRequest,
-} from '../UserDataActions';
-import { UserDataActionType } from '../UserDataActionType.enum';
-import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
-import { ObjectsCustom } from 'foundations/ObjectsCustom';
-import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-export const fetchingAllUserData = <Meta extends ActionMeta>(
-  payload: FetchAllUserDataRequest,
-  meta?: Meta
-): FetchingAllUserDataAction<Meta> => ({
-  type: UserDataActionType.FETCHING_ALL_USER_DATA,
-  payload,
-  meta,
-});
+import {
+  ActionMeta,
+  allUserDataRetrieved,
+  errorFetchingAllUserData,
+  fetchingAllUserData,
+  UserDataActionType,
+} from 'pubnub-redux';
+import { FetchAllUserDataRequest } from 'pubnub-redux/dist/features/user/UserDataActions';
 
-export const allUserDataRetrieved = <
-  UserCustom extends ObjectsCustom,
-  Meta extends ActionMeta
->(
-  payload: FetchAllUserDataSuccess<UserCustom>,
-  meta?: Meta
-): AllUserDataRetrievedAction<UserCustom, Meta> => ({
-  type: UserDataActionType.ALL_USER_DATA_RETRIEVED,
-  payload,
-  meta,
-});
+import { PayloadAction } from '../../../foundations/createAction';
+import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
 
-export const errorFetchingAllUserData = <Meta extends ActionMeta = AnyMeta>(
-  payload: FetchAllUserDataError,
-  meta?: Meta
-): ErrorFetchingAllUserDataAction<Meta> => ({
-  type: UserDataActionType.ERROR_FETCHING_ALL_USER_DATA,
-  payload,
-  meta,
-  error: true,
-});
-
-export const fetchAllUserData = <Meta extends ActionMeta = AnyMeta>(
+export const fetchAllUserData = <Meta extends ActionMeta = {}>(
   request: FetchAllUserDataRequest = {},
   meta: Meta
 ): PayloadAction<FetchAllUserDataRequest, string, ActionMeta> => ({

@@ -1,52 +1,20 @@
-import { UserDataActionType } from '../UserDataActionType.enum';
-import {
-  ErrorFetchingUserDataAction,
-  UserDataRetrievedAction,
-  FetchingUserDataAction,
-  FetchUserDataError,
-  FetchUserDataSuccess,
-  FetchUserDataRequest,
-} from '../UserDataActions';
-import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
-import { ObjectsCustom } from 'foundations/ObjectsCustom';
-import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-export const fetchingUserData = <Meta extends ActionMeta>(
-  payload: FetchUserDataRequest,
-  meta?: Meta
-): FetchingUserDataAction<Meta> => ({
-  type: UserDataActionType.FETCHING_USER_DATA,
-  payload,
-  meta,
-});
+import {
+  ActionMeta,
+  errorFetchingUserData,
+  fetchingUserData,
+  UserDataActionType,
+  UserDataRetrieved,
+} from 'pubnub-redux';
+import { FetchUserDataRequest } from 'pubnub-redux/dist/features/user/UserDataActions';
 
-export const UserDataRetrieved = <
-  UserCustom extends ObjectsCustom,
-  Meta extends ActionMeta
->(
-  payload: FetchUserDataSuccess<UserCustom>,
-  meta?: Meta
-): UserDataRetrievedAction<UserCustom, Meta> => ({
-  type: UserDataActionType.USER_DATA_RETRIEVED,
-  payload,
-  meta,
-});
+import { PayloadAction } from '../../../foundations/createAction';
+import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
 
-export const errorFetchingUserData = <Meta extends ActionMeta>(
-  payload: FetchUserDataError,
-  meta?: Meta
-): ErrorFetchingUserDataAction<Meta> => ({
-  type: UserDataActionType.ERROR_FETCHING_USER_DATA,
-  payload,
-  meta,
-  error: true,
-});
-
-export const fetchUserData = <Meta extends ActionMeta = AnyMeta>(
+export const fetchUserData = <Meta extends ActionMeta = {}>(
   request: FetchUserDataRequest,
   meta: Meta
 ): PayloadAction<FetchUserDataRequest, string, ActionMeta> => ({

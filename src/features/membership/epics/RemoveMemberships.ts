@@ -1,61 +1,20 @@
-import {
-  RemovingChannelsAction,
-  MembershipsRemovedAction,
-  SetMembershipsSuccess,
-  ErrorRemovingMembershipsAction,
-  SetMembershipsError,
-  SetMembershipsRequest,
-  RemoveMembershipsRequest,
-} from '../MembershipActions';
-import { MembershipActionType } from '../MembershipActionType.enum';
-import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
-import { ObjectsCustom } from 'foundations/ObjectsCustom';
-import { ObjectCustom } from 'pubnub';
-import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-export const removingMemberships = <
-  ChannelCustom extends ObjectsCustom,
-  Meta extends ActionMeta
->(
-  payload: SetMembershipsRequest<ChannelCustom>,
-  meta?: Meta
-): RemovingChannelsAction<ChannelCustom, Meta> => ({
-  type: MembershipActionType.REMOVING_MEMBERSHIPS,
-  payload,
-  meta,
-});
+import {
+  ActionMeta,
+  errorRemovingMemberships,
+  MembershipActionType,
+  membershipsRemoved,
+  removingMemberships,
+} from 'pubnub-redux';
+import { RemoveMembershipsRequest } from 'pubnub-redux/dist/features/membership/MembershipActions';
 
-export const membershipsRemoved = <
-  MembershipCustom extends ObjectCustom,
-  ChannelCustom extends ObjectsCustom,
-  Meta extends ActionMeta
->(
-  payload: SetMembershipsSuccess<MembershipCustom, ChannelCustom>,
-  meta?: Meta
-): MembershipsRemovedAction<MembershipCustom, ChannelCustom, Meta> => ({
-  type: MembershipActionType.MEMBERSHIPS_REMOVED,
-  payload,
-  meta,
-});
+import { PayloadAction } from '../../../foundations/createAction';
+import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
 
-export const errorRemovingMemberships = <
-  ChannelCustom extends ObjectsCustom,
-  Meta extends ActionMeta
->(
-  payload: SetMembershipsError<ChannelCustom>,
-  meta?: Meta
-): ErrorRemovingMembershipsAction<ChannelCustom, Meta> => ({
-  type: MembershipActionType.ERROR_REMOVING_MEMBERSHIPS,
-  payload,
-  meta,
-  error: true,
-});
-
-export const removeMemberships = <Meta extends ActionMeta = AnyMeta>(
+export const removeMemberships = <Meta extends ActionMeta = {}>(
   request: RemoveMembershipsRequest,
   meta: Meta
 ): PayloadAction<RemoveMembershipsRequest, string, ActionMeta> => ({

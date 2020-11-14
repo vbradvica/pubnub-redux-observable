@@ -1,5 +1,5 @@
 import Pubnub from 'pubnub';
-import { ChannelDataActionType } from '../ChannelDataActionType.enum';
+import { ChannelDataActionType } from 'pubnub-redux';
 import { removeChannelData, removeChannelDataEpic } from './RemoveChannelData';
 import { createMockStore } from 'foundations/Test-utils';
 

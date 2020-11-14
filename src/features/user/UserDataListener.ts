@@ -1,31 +1,17 @@
 import Pubnub from 'pubnub';
 import { Subscriber } from 'rxjs';
+import {} from 'pubnub-redux';
 import {
-  UserDataSetEventAction,
-  UserDataRemovedEventAction,
   UserDataListenerActions,
-  UserDataEventMessage,
   UsersListenerPayload,
-} from './UserDataActions';
-import { UserDataActionType } from './UserDataActionType.enum';
-import { ObjectsCustom } from 'foundations/ObjectsCustom';
-
-export const UserDataSet = <UserCustom extends ObjectsCustom>(
-  payload: UserDataEventMessage<UserCustom>
-): UserDataSetEventAction<UserCustom> => ({
-  type: UserDataActionType.USER_DATA_SET_EVENT,
-  payload,
-});
-
-export const UserDataRemoved = <UserCustom extends ObjectsCustom>(
-  payload: UserDataEventMessage<UserCustom>
-): UserDataRemovedEventAction<UserCustom> => ({
-  type: UserDataActionType.USER_DATA_REMOVED_EVENT,
-  payload,
-});
+} from 'pubnub-redux/dist/features/user/UserDataActions';
+import {
+  UserDataRemoved,
+  UserDataSet,
+} from 'pubnub-redux/dist/features/user/UserDataListener';
 
 export const createUserDataListener = <
-  UserCustom extends ObjectsCustom = ObjectsCustom
+  UserCustom extends Pubnub.ObjectCustom = Pubnub.ObjectCustom
 >(
   observer: Subscriber<UserDataListenerActions<UserCustom>>
 ): Pubnub.ListenerParameters => ({

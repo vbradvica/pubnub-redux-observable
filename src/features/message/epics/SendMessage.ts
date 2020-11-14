@@ -1,62 +1,23 @@
-import {
-  SendMessageRequest,
-  SendingMessageAction,
-  MessageSentAction,
-  SendMessageSuccess,
-  ErrorSendingMessageAction,
-  SendMessageError,
-} from '../MessageActions';
-import { MessageActionType } from '../MessageActionType.enum';
-import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
-import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-export const sendingMessage = <
-  MessageContentType extends object,
-  MessageMeta extends object,
-  Meta extends ActionMeta
->(
-  payload: SendMessageRequest<MessageContentType, MessageMeta>,
-  meta?: Meta
-): SendingMessageAction<MessageContentType, MessageMeta, Meta> => ({
-  type: MessageActionType.SENDING_MESSAGE,
-  payload,
-  meta,
-});
+import {
+  ActionMeta,
+  errorSendingMessage,
+  MessageActionType,
+  messageSent,
+  sendingMessage,
+} from 'pubnub-redux';
+import { SendMessageRequest } from 'pubnub-redux/dist/features/message/MessageActions';
 
-export const messageSent = <
-  MessageContentType extends object,
-  MessageMeta extends object,
-  Meta extends ActionMeta
->(
-  payload: SendMessageSuccess<MessageContentType, MessageMeta>,
-  meta?: Meta
-): MessageSentAction<MessageContentType, MessageMeta, Meta> => ({
-  type: MessageActionType.MESSAGE_SENT,
-  payload,
-  meta,
-});
-
-export const errorSendingMessage = <
-  MessageContentType extends object,
-  MessageMeta extends object,
-  Meta extends ActionMeta
->(
-  payload: SendMessageError<MessageContentType, MessageMeta>,
-  meta?: Meta
-): ErrorSendingMessageAction<MessageContentType, MessageMeta, Meta> => ({
-  type: MessageActionType.ERROR_SENDING_MESSAGE,
-  payload,
-  meta,
-});
+import { PayloadAction } from '../../../foundations/createAction';
+import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
 
 export const sendMessage = <
   MessageContentType extends object = {},
   MessageMeta extends object = {},
-  Meta extends ActionMeta = AnyMeta
+  Meta extends ActionMeta = {}
 >(
   request: SendMessageRequest<MessageContentType, MessageMeta>,
   meta: Meta

@@ -1,7 +1,8 @@
 import Pubnub from 'pubnub';
-import { UserDataActionType } from '../UserDataActionType.enum';
 import { removeUserData, removeUserDataEpic } from './RemoveUserData';
 import { createMockStore } from 'foundations/Test-utils';
+
+import { UserDataActionType } from 'pubnub-redux';
 
 function fixturePubnubDeleteUserSuccess() {
   const pubnub = {

@@ -1,48 +1,20 @@
-import {
-  UserDataRemovedAction,
-  RemovingUserDataAction,
-  ErrorRemovingUserDataAction,
-  DeleteUserDataRequest,
-  DeleteUserDataError,
-  DeleteUserDataSuccess,
-} from '../UserDataActions';
-import { UserDataActionType } from '../UserDataActionType.enum';
-import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
-import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-export const removingUserData = <Meta extends ActionMeta>(
-  payload: DeleteUserDataRequest,
-  meta?: Meta
-): RemovingUserDataAction<Meta> => ({
-  type: UserDataActionType.REMOVING_USER_DATA,
-  payload,
-  meta,
-});
+import {
+  ActionMeta,
+  errorRemovingUserData,
+  removingUserData,
+  UserDataActionType,
+  UserDataRemoved,
+} from 'pubnub-redux';
+import { DeleteUserDataRequest } from 'pubnub-redux/dist/features/user/UserDataActions';
 
-export const UserDataRemoved = <Meta extends ActionMeta>(
-  payload: DeleteUserDataSuccess,
-  meta?: Meta
-): UserDataRemovedAction<Meta> => ({
-  type: UserDataActionType.USER_DATA_REMOVED,
-  payload,
-  meta,
-});
+import { PayloadAction } from '../../../foundations/createAction';
+import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
 
-export const errorRemovingUserData = <Meta extends ActionMeta>(
-  payload: DeleteUserDataError,
-  meta?: Meta
-): ErrorRemovingUserDataAction<Meta> => ({
-  type: UserDataActionType.ERROR_REMOVING_USER_DATA,
-  payload,
-  meta,
-  error: true,
-});
-
-export const removeUserData = <Meta extends ActionMeta = AnyMeta>(
+export const removeUserData = <Meta extends ActionMeta = {}>(
   request: DeleteUserDataRequest,
   meta: Meta
 ): PayloadAction<DeleteUserDataRequest, string, ActionMeta> => ({

@@ -1,52 +1,20 @@
-import { ChannelDataActionType } from '../ChannelDataActionType.enum';
-import {
-  ErrorFetchingChannelDataAction,
-  ChannelDataRetrievedAction,
-  FetchingChannelDataAction,
-  FetchChannelDataError,
-  FetchChannelDataSuccess,
-  FetchChannelDataRequest,
-} from '../ChannelDataActions';
-import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
-import { ObjectsCustom } from 'foundations/ObjectsCustom';
-import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 
-export const fetchingChannelData = <Meta extends ActionMeta>(
-  payload: FetchChannelDataRequest,
-  meta?: Meta
-): FetchingChannelDataAction<Meta> => ({
-  type: ChannelDataActionType.FETCHING_CHANNEL_DATA,
-  payload,
-  meta,
-});
+import {
+  ActionMeta,
+  ChannelDataActionType,
+  channelDataRetrieved,
+  errorFetchingChannelData,
+  fetchingChannelData,
+} from 'pubnub-redux';
+import { FetchChannelDataRequest } from 'pubnub-redux/dist/features/channel/ChannelDataActions';
 
-export const channelDataRetrieved = <
-  ChannelCustom extends ObjectsCustom,
-  Meta extends ActionMeta
->(
-  payload: FetchChannelDataSuccess<ChannelCustom>,
-  meta?: Meta
-): ChannelDataRetrievedAction<ChannelCustom, Meta> => ({
-  type: ChannelDataActionType.CHANNEL_DATA_RETRIEVED,
-  payload,
-  meta,
-});
+import { PayloadAction } from '../../../foundations/createAction';
+import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
 
-export const errorFetchingChannelData = <Meta extends ActionMeta>(
-  payload: FetchChannelDataError,
-  meta?: Meta
-): ErrorFetchingChannelDataAction<Meta> => ({
-  type: ChannelDataActionType.ERROR_FETCHING_CHANNEL_DATA,
-  payload,
-  meta,
-  error: true,
-});
-
-export const fetchChannelData = <Meta extends ActionMeta = AnyMeta>(
+export const fetchChannelData = <Meta extends ActionMeta = {}>(
   request: FetchChannelDataRequest,
   meta: Meta
 ): PayloadAction<FetchChannelDataRequest, string, ActionMeta> => ({

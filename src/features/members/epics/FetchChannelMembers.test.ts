@@ -3,7 +3,7 @@ import {
   fetchChannelMembers,
   fetchChannelMembersEpic,
 } from './FetchChannelMembers';
-import { ChannelMembersActionType } from '../ChannelMembersActionType.enum';
+import { ChannelMembersActionType } from 'pubnub-redux';
 import { createMockStore } from 'foundations/Test-utils';
 
 function fixturePubnubFetchMembersSuccess() {

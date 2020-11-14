@@ -1,5 +1,5 @@
 import Pubnub from 'pubnub';
-import { PresenceActionType } from '../PresenceActionType.enum';
+import { PresenceActionType } from 'pubnub-redux';
 import {
   fetchPresenceState,
   fetchPresenceStateEpic,

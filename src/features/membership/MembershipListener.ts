@@ -1,16 +1,18 @@
 import { Subscriber } from 'rxjs';
 import Pubnub from 'pubnub';
+
+import { MembershipActionType } from 'pubnub-redux';
 import {
   MembershipListenerActions,
-  MembershipSetEventAction,
   MembershipRemovedEventAction,
-  SetMembershipEventMessage,
+  MembershipSetEventAction,
   RemoveMembershipEventMessage,
-} from './MembershipActions';
-import { MembershipActionType } from './MembershipActionType.enum';
-import { ObjectsCustom } from 'foundations/ObjectsCustom';
+  SetMembershipEventMessage,
+} from 'pubnub-redux/dist/features/membership/MembershipActions';
 
-const membershipSetEventRecieved = <MembershipCustom extends ObjectsCustom>(
+const membershipSetEventRecieved = <
+  MembershipCustom extends Pubnub.ObjectCustom
+>(
   payload: SetMembershipEventMessage<MembershipCustom>
 ): MembershipSetEventAction<MembershipCustom> => ({
   type: MembershipActionType.MEMBERSHIP_SET_EVENT,
@@ -25,7 +27,7 @@ const membershipRemovedEventRecieved = (
 });
 
 export const createMembershipListener = <
-  MembershipCustom extends ObjectsCustom
+  MembershipCustom extends Pubnub.ObjectCustom
 >(
   observer: Subscriber<MembershipListenerActions<MembershipCustom>>
 ): Pubnub.ListenerParameters => ({

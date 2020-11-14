@@ -1,61 +1,23 @@
-import {
-  SettingMembershipsAction,
-  MembershipsSetAction,
-  SetMembershipsSuccess,
-  ErrorSettingMembershipsAction,
-  SetMembershipsError,
-  SetMembershipsRequest,
-} from '../MembershipActions';
-import { MembershipActionType } from '../MembershipActionType.enum';
-import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
-import { ObjectsCustom } from 'foundations/ObjectsCustom';
-import { PayloadAction } from 'foundations/createAction';
+import Pubnub from 'pubnub';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-export const settingMemberships = <
-  ChannelCustom extends ObjectsCustom,
-  Meta extends ActionMeta
->(
-  payload: SetMembershipsRequest<ChannelCustom>,
-  meta?: Meta
-): SettingMembershipsAction<ChannelCustom, Meta> => ({
-  type: MembershipActionType.SETTING_MEMBERSHIPS,
-  payload,
-  meta,
-});
+import {
+  ActionMeta,
+  errorSettingMemberships,
+  MembershipActionType,
+  membershipsSet,
+  settingMemberships,
+} from 'pubnub-redux';
+import { SetMembershipsRequest } from 'pubnub-redux/dist/features/membership/MembershipActions';
 
-export const membershipsSet = <
-  MembershipCustom extends ObjectsCustom,
-  ChannelCustom extends ObjectsCustom,
-  Meta extends ActionMeta
->(
-  payload: SetMembershipsSuccess<MembershipCustom, ChannelCustom>,
-  meta?: Meta
-): MembershipsSetAction<MembershipCustom, ChannelCustom, Meta> => ({
-  type: MembershipActionType.MEMBERSHIPS_SET,
-  payload,
-  meta,
-});
-
-export const errorSettingMemberships = <
-  ChannelCustom extends ObjectsCustom,
-  Meta extends ActionMeta
->(
-  payload: SetMembershipsError<ChannelCustom>,
-  meta?: Meta
-): ErrorSettingMembershipsAction<ChannelCustom, Meta> => ({
-  type: MembershipActionType.ERROR_SETTING_MEMBERSHIPS,
-  payload,
-  meta,
-  error: true,
-});
+import { PayloadAction } from '../../../foundations/createAction';
+import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
 
 export const setMemberships = <
-  ChannelCustom extends ObjectsCustom,
-  Meta extends ActionMeta = AnyMeta
+  ChannelCustom extends Pubnub.ObjectCustom,
+  Meta extends ActionMeta = {}
 >(
   request: SetMembershipsRequest<ChannelCustom>,
   meta: Meta

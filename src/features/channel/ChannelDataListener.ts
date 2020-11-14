@@ -1,28 +1,15 @@
 import Pubnub from 'pubnub';
 import { Subscriber } from 'rxjs';
+
 import {
-  ChannelDataSetEventAction,
-  ChannelDataRemovedEventAction,
-  ChannelDataListenerActions,
-  ChannelDataEventMessage,
   Channel,
-} from './ChannelDataActions';
-import { ChannelDataActionType } from './ChannelDataActionType.enum';
-import { ObjectsCustom, GetChannelCustom } from 'foundations/ObjectsCustom';
-
-export const channelDataSet = <ChannelCustom extends ObjectsCustom>(
-  payload: ChannelDataEventMessage<ChannelCustom>
-): ChannelDataSetEventAction<ChannelCustom> => ({
-  type: ChannelDataActionType.CHANNEL_DATA_SET_EVENT,
-  payload,
-});
-
-export const channelDataRemoved = <ChannelCustom extends ObjectsCustom>(
-  payload: ChannelDataEventMessage<ChannelCustom>
-): ChannelDataRemovedEventAction<ChannelCustom> => ({
-  type: ChannelDataActionType.CHANNEL_DATA_REMOVED_EVENT,
-  payload,
-});
+  ChannelDataListenerActions,
+} from 'pubnub-redux/dist/features/channel/ChannelDataActions';
+import { GetChannelCustom } from 'pubnub-redux/dist/foundations/ObjectsCustom';
+import {
+  channelDataRemoved,
+  channelDataSet,
+} from 'pubnub-redux/dist/features/channel/ChannelDataListener';
 
 export const createChannelDataListener = <ChannelType extends Channel>(
   observer: Subscriber<
@@ -31,9 +18,9 @@ export const createChannelDataListener = <ChannelType extends Channel>(
 ) => ({
   objects: (
     payload: Pubnub.ObjectsEvent<
-      ObjectsCustom,
+      Pubnub.ObjectCustom,
       GetChannelCustom<ChannelType>,
-      ObjectsCustom
+      Pubnub.ObjectCustom
     >
   ) => {
     if (payload.message.type !== 'channel') {

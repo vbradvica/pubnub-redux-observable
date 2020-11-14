@@ -1,7 +1,5 @@
 import Pubnub from 'pubnub';
 import { ChannelActionType } from './ChannelActionType.enum';
-import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
-import { PayloadAction } from 'foundations/createAction';
 
 export type SubscribeToChannelRequest = Pubnub.SubscribeParameters;
 
@@ -37,15 +35,6 @@ export interface ErrorSubscribingChannelAction<MetaType> {
   payload: SubscribeToChannelError;
   meta?: MetaType;
 }
-
-export const sendSignal = <Meta extends ActionMeta = AnyMeta>(
-  request: SubscribeToChannelRequest,
-  meta: Meta
-): PayloadAction<SubscribeToChannelRequest, string, ActionMeta> => ({
-  type: ChannelActionType.SUBSCRIBE_CHANNEL_COMMAND,
-  payload: request,
-  meta,
-});
 
 export type ChannelActions<MetaType> =
   | SubscribingToChannelAction<MetaType>

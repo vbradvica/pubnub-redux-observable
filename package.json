@@ -67,6 +67,7 @@
     ]
   },
   "dependencies": {
+    "pubnub-redux": "0.0.12",
     "redux-observable": "^1.2.0",
     "release-it": "^13.6.6"
   }

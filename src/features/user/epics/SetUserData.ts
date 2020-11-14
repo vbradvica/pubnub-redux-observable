@@ -1,57 +1,23 @@
-import {
-  SettingUserDataAction,
-  UserDataSetAction,
-  ErrorSettingUserDataAction,
-  UserDataError,
-  UserDataSuccess,
-  SetUserDataRequest,
-} from '../UserDataActions';
-import { UserDataActionType } from '../UserDataActionType.enum';
-import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
-import { ObjectsCustom } from 'foundations/ObjectsCustom';
-import { PayloadAction } from 'foundations/createAction';
+import Pubnub from 'pubnub';
 import { Epic, ofType } from 'redux-observable';
-import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-export const settingUserData = <
-  UserCustom extends ObjectsCustom,
-  Meta extends ActionMeta
->(
-  payload: SetUserDataRequest<UserCustom>,
-  meta?: Meta
-): SettingUserDataAction<Meta> => ({
-  type: UserDataActionType.SETTING_USER_DATA,
-  payload,
-  meta,
-});
+import {
+  ActionMeta,
+  errorSettingUserData,
+  settingUserData,
+  UserDataActionType,
+  UserDataSet,
+} from 'pubnub-redux';
+import { SetUserDataRequest } from 'pubnub-redux/dist/features/user/UserDataActions';
 
-export const UserDataSet = <
-  UserCustom extends ObjectsCustom,
-  Meta extends ActionMeta
->(
-  payload: UserDataSuccess<UserCustom>,
-  meta?: Meta
-): UserDataSetAction<UserCustom, Meta> => ({
-  type: UserDataActionType.USER_DATA_SET,
-  payload,
-  meta,
-});
-
-export const errorSettingUserData = <Meta extends ActionMeta>(
-  payload: UserDataError,
-  meta?: Meta
-): ErrorSettingUserDataAction<Meta> => ({
-  type: UserDataActionType.ERROR_SETTING_USER_DATA,
-  payload,
-  meta,
-  error: true,
-});
+import { PayloadAction } from '../../../foundations/createAction';
+import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
 
 export const setUserData = <
-  UserCustom extends ObjectsCustom,
-  Meta extends ActionMeta = AnyMeta
+  UserCustom extends Pubnub.ObjectCustom,
+  Meta extends ActionMeta = {}
 >(
   request: SetUserDataRequest<UserCustom>,
   meta: Meta

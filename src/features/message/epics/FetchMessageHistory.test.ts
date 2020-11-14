@@ -1,5 +1,5 @@
 import Pubnub from 'pubnub';
-import { MessageActionType } from '../MessageActionType.enum';
+import { MessageActionType } from 'pubnub-redux';
 import {
   fetchMessageHistory,
   fetchMessageHistoryEpic,
