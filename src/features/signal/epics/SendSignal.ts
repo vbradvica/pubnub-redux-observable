@@ -12,7 +12,14 @@ import {
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
-import { SendSignalRequest } from 'pubnub-redux/dist/features/signal/SignalActions';
+
+export interface SignalRequestOptions<SignalContentType> {
+  message: SignalContentType;
+  channel: string;
+}
+type SendSignalRequest<SignalContentType> = SignalRequestOptions<
+  SignalContentType
+>;
 
 export const sendSignal = <
   SignalContentType extends object = {},

@@ -10,10 +10,15 @@ import {
   membershipsSet,
   settingMemberships,
 } from 'pubnub-redux';
-import { SetMembershipsRequest } from 'pubnub-redux/dist/features/membership/MembershipActions';
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+export interface SetMembershipsRequest<
+  ChannelCustom extends Pubnub.ObjectCustom
+> extends Pubnub.SetMembershipsParameters<ChannelCustom> {
+  uuid: string;
+}
 
 export const setMemberships = <
   ChannelCustom extends Pubnub.ObjectCustom,

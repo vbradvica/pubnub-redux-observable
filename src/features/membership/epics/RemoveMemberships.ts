@@ -1,3 +1,4 @@
+import Pubnub from 'pubnub';
 import { Epic, ofType } from 'redux-observable';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -9,10 +10,14 @@ import {
   membershipsRemoved,
   removingMemberships,
 } from 'pubnub-redux';
-import { RemoveMembershipsRequest } from 'pubnub-redux/dist/features/membership/MembershipActions';
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+export interface RemoveMembershipsRequest
+  extends Pubnub.RemoveMembershipsParameters {
+  uuid: string;
+}
 
 export const removeMemberships = <Meta extends ActionMeta = {}>(
   request: RemoveMembershipsRequest,

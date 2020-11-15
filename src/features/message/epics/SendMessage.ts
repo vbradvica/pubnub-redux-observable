@@ -6,13 +6,18 @@ import {
   ActionMeta,
   errorSendingMessage,
   MessageActionType,
+  MessageRequestOptions,
   messageSent,
   sendingMessage,
 } from 'pubnub-redux';
-import { SendMessageRequest } from 'pubnub-redux/dist/features/message/MessageActions';
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+type SendMessageRequest<
+  MessageContentType,
+  MessageMetaType
+> = MessageRequestOptions<MessageContentType, MessageMetaType>;
 
 export const sendMessage = <
   MessageContentType extends object = {},

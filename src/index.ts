@@ -105,7 +105,11 @@ import {
   PubnubEpicDependencies,
 } from './foundations/EpicDependency';
 
-export { MessageReceivedAction } from 'pubnub-redux/dist/features/message/MessageActions';
+import { MessageActionType } from 'pubnub-redux';
+export interface MessageReceivedAction<MessageType> {
+  type: typeof MessageActionType.MESSAGE_RECEIVED;
+  payload: MessageType;
+}
 
 export {
   // Commands

@@ -1,3 +1,4 @@
+import Pubnub from 'pubnub';
 import { Epic, ofType } from 'redux-observable';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -9,10 +10,12 @@ import {
   fetchingAllUserData,
   UserDataActionType,
 } from 'pubnub-redux';
-import { FetchAllUserDataRequest } from 'pubnub-redux/dist/features/user/UserDataActions';
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+type UserDataRequestOptions = Pubnub.GetAllMetadataParameters;
+type FetchAllUserDataRequest = UserDataRequestOptions;
 
 export const fetchAllUserData = <Meta extends ActionMeta = {}>(
   request: FetchAllUserDataRequest = {},

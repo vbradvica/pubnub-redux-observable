@@ -1,15 +1,51 @@
 import Pubnub from 'pubnub';
 import { Subscriber } from 'rxjs';
 
-import {
-  Channel,
-  ChannelDataListenerActions,
-} from 'pubnub-redux/dist/features/channel/ChannelDataActions';
-import { GetChannelCustom } from 'pubnub-redux/dist/foundations/ObjectsCustom';
-import {
-  channelDataRemoved,
-  channelDataSet,
-} from 'pubnub-redux/dist/features/channel/ChannelDataListener';
+import { Channel, ChannelDataActionType } from 'pubnub-redux';
+import { GetChannelCustom } from 'foundations/ObjectsCustom';
+
+export type SetChannelDataEventMessage<
+  ChannelCustom extends Pubnub.ObjectCustom
+> = Pubnub.SetChannelMetadataEvent<ChannelCustom>['message'];
+export type RemoveChannelDataEventMessage = Pubnub.RemoveChannelMetadataEvent['message'];
+
+export type ChannelDataEventMessage<
+  ChannelCustom extends Pubnub.ObjectCustom
+> = SetChannelDataEventMessage<ChannelCustom> | RemoveChannelDataEventMessage;
+
+export interface ChannelDataSetEventAction<
+  ChannelCustom extends Pubnub.ObjectCustom
+> {
+  type: typeof ChannelDataActionType.CHANNEL_DATA_SET_EVENT;
+  payload: ChannelDataEventMessage<ChannelCustom>;
+}
+
+export interface ChannelDataRemovedEventAction<
+  ChannelCustom extends Pubnub.ObjectCustom
+> {
+  type: typeof ChannelDataActionType.CHANNEL_DATA_REMOVED_EVENT;
+  payload: ChannelDataEventMessage<ChannelCustom>;
+}
+
+export const channelDataSet = <ChannelCustom extends Pubnub.ObjectCustom>(
+  payload: ChannelDataEventMessage<ChannelCustom>
+): ChannelDataSetEventAction<ChannelCustom> => ({
+  type: ChannelDataActionType.CHANNEL_DATA_SET_EVENT,
+  payload,
+});
+
+export const channelDataRemoved = <ChannelCustom extends Pubnub.ObjectCustom>(
+  payload: ChannelDataEventMessage<ChannelCustom>
+): ChannelDataRemovedEventAction<ChannelCustom> => ({
+  type: ChannelDataActionType.CHANNEL_DATA_REMOVED_EVENT,
+  payload,
+});
+
+export type ChannelDataListenerActions<
+  ChannelCustom extends Pubnub.ObjectCustom
+> =
+  | ChannelDataSetEventAction<ChannelCustom>
+  | ChannelDataRemovedEventAction<ChannelCustom>;
 
 export const createChannelDataListener = <ChannelType extends Channel>(
   observer: Subscriber<

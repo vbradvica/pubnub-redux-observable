@@ -10,10 +10,13 @@ import {
   UserDataActionType,
   UserDataSet,
 } from 'pubnub-redux';
-import { SetUserDataRequest } from 'pubnub-redux/dist/features/user/UserDataActions';
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+export declare type SetUserDataRequest<
+  UserCustom extends Pubnub.ObjectCustom
+> = Pubnub.SetUUIDMetadataParameters<UserCustom>;
 
 export const setUserData = <
   UserCustom extends Pubnub.ObjectCustom,

@@ -1,12 +1,30 @@
 import { Subscriber } from 'rxjs';
 
-import { NetworkStatusResponse } from 'pubnub-redux';
 import {
-  NetworkStatusListenerActions,
-  networkUp,
   networkDown,
-} from 'pubnub-redux/dist/features/networkStatus/NetworkStatusListener';
-import { NetworkStatusCategory } from 'pubnub-redux/dist/features/networkStatus/NetworkStatusCategory.enum';
+  NetworkStatusActionType,
+  NetworkStatusResponse,
+  networkUp,
+} from 'pubnub-redux';
+
+export interface NetworkUpEventAction {
+  type: typeof NetworkStatusActionType.NETWORK_UP_EVENT;
+}
+export interface NetworkDownEventAction {
+  type: typeof NetworkStatusActionType.NETWORK_DOWN_EVENT;
+}
+
+declare enum NetworkStatusCategory {
+  PN_NETWORK_UP_CATEGORY = 'PNNetworkUpCategory',
+  PN_NETWORK_DOWN_CATEGORY = 'PNNetworkDownCategory',
+  PN_RECONNECTED_CATEGORY = 'PNReconnectedCategory',
+  PN_CONNECTED_CATEGORY = 'PNConnectedCategory',
+  PN_TIMEOUT_CATEGORY = 'PNTimeoutCategory',
+}
+
+export type NetworkStatusListenerActions =
+  | NetworkUpEventAction
+  | NetworkDownEventAction;
 
 export const createNetworkStatusListener = (
   observer: Subscriber<NetworkStatusListenerActions>

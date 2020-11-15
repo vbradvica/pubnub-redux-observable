@@ -9,10 +9,13 @@ import {
   UserDataActionType,
   UserDataRemoved,
 } from 'pubnub-redux';
-import { DeleteUserDataRequest } from 'pubnub-redux/dist/features/user/UserDataActions';
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+export interface DeleteUserDataRequest {
+  uuid: string;
+}
 
 export const removeUserData = <Meta extends ActionMeta = {}>(
   request: DeleteUserDataRequest,

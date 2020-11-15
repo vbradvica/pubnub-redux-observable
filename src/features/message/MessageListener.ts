@@ -1,9 +1,15 @@
 import Pubnub from 'pubnub';
 import { Subscriber } from 'rxjs';
 
-import { Message } from 'pubnub-redux';
-import { MessageReceivedAction } from 'pubnub-redux/dist/features/message/MessageActions';
-import { messageReceived } from 'pubnub-redux/dist/features/message/MessageListener';
+import { Message, MessageActionType } from 'pubnub-redux';
+
+export interface MessageReceivedAction<MessageType> {
+  type: typeof MessageActionType.MESSAGE_RECEIVED;
+  payload: MessageType;
+}
+export declare const messageReceived: <MessageType extends Message>(
+  payload: MessageType
+) => MessageReceivedAction<MessageType>;
 
 export const createMessageListener = <MessageType extends Message>(
   observer: Subscriber<MessageReceivedAction<MessageType>>

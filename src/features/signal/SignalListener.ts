@@ -1,9 +1,15 @@
 import Pubnub from 'pubnub';
 import { Subscriber } from 'rxjs';
 
-import { Signal } from 'pubnub-redux';
-import { SignalReceivedAction } from 'pubnub-redux/dist/features/signal/SignalActions';
-import { signalReceived } from 'pubnub-redux/dist/features/signal/SignalListener';
+import { Signal, SignalActionType } from 'pubnub-redux';
+declare const signalReceived: <SignalType extends Signal>(
+  payload: SignalType
+) => SignalReceivedAction<SignalType>;
+
+export interface SignalReceivedAction<SignalType> {
+  type: typeof SignalActionType.SIGNAL_RECEIVED;
+  payload: SignalType;
+}
 
 export const createSignalListener = <SignalType extends Signal>(
   observer: Subscriber<SignalReceivedAction<SignalType>>

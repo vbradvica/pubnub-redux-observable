@@ -1,3 +1,4 @@
+import Pubnub from 'pubnub';
 import { Epic, ofType } from 'redux-observable';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -9,10 +10,11 @@ import {
   errorRemovingChannelMembers,
   removingChannelMembers,
 } from 'pubnub-redux';
-import { RemoveChannelMembersRequest } from 'pubnub-redux/dist/features/members/ChannelMembersActions';
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+type RemoveChannelMembersRequest = Pubnub.RemoveChannelMembersParameters;
 
 export const removeChannelMembers = <Meta extends ActionMeta = {}>(
   request: RemoveChannelMembersRequest,

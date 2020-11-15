@@ -1,11 +1,31 @@
 import { Subscriber } from 'rxjs';
-import { SubscriptionStatusResponse } from 'pubnub-redux';
 import {
-  connected,
-  reconnected,
-  SubscriptionStatusListenerActions,
-} from 'pubnub-redux/dist/features/subscriptionStatus/SubscriptionStatusListener';
-import { SubscriptionStatusCategory } from 'pubnub-redux/dist/features/subscriptionStatus/SubscriptionStatusCategory.enum';
+  SubscriptionStatusActionType,
+  SubscriptionStatusResponse,
+} from 'pubnub-redux';
+
+declare enum SubscriptionStatusCategory {
+  PN_CONNECTED_CATEGORY = 'PNConnectedCategory',
+  PN_RECONNECTED_CATEGORY = 'PNReconnectedCategory',
+}
+export interface ReconnectedAction {
+  type: typeof SubscriptionStatusActionType.RECONNECTED_EVENT;
+  payload: SubscriptionStatusResponse;
+}
+export interface ConnectedAction {
+  type: typeof SubscriptionStatusActionType.CONNECTED_EVENT;
+  payload: SubscriptionStatusResponse;
+}
+
+export declare const reconnected: (
+  payload: SubscriptionStatusResponse
+) => ReconnectedAction;
+export declare const connected: (
+  payload: SubscriptionStatusResponse
+) => ConnectedAction;
+export declare type SubscriptionStatusListenerActions =
+  | ReconnectedAction
+  | ConnectedAction;
 
 export const createSubscriptionStatusListener = (
   observer: Subscriber<SubscriptionStatusListenerActions>

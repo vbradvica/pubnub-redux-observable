@@ -1,3 +1,4 @@
+import Pubnub from 'pubnub';
 import { Epic, ofType } from 'redux-observable';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -9,10 +10,11 @@ import {
   errorFetchingChannelMembers,
   fetchingChannelMembers,
 } from 'pubnub-redux';
-import { FetchChannelMembersRequest } from 'pubnub-redux/dist/features/members/ChannelMembersActions';
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+type FetchChannelMembersRequest = Pubnub.GetChannelMembersParameters;
 
 export const fetchChannelMembers = <Meta extends ActionMeta = {}>(
   request: FetchChannelMembersRequest,

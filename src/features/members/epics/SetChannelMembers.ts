@@ -10,10 +10,13 @@ import {
   errorSettingChannelMembers,
   settingChannelMembers,
 } from 'pubnub-redux';
-import { SetChannelMembersRequest } from 'pubnub-redux/dist/features/members/ChannelMembersActions';
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+type SetChannelMembersRequest<
+  MembershipCustom extends Pubnub.ObjectCustom
+> = Pubnub.SetChannelMembersParameters<MembershipCustom>;
 
 export const setChannelMembers = <
   MembershipCustom extends Pubnub.ObjectCustom,

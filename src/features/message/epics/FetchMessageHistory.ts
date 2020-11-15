@@ -3,7 +3,6 @@ import { Epic, ofType } from 'redux-observable';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import { FetchMessageHistoryResponse } from 'pubnub-redux/dist/features/message/MessageActions';
 import {
   MessageActionType,
   ActionMeta,
@@ -14,6 +13,18 @@ import {
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+export interface HistoryResponseMessage<MessageContentType> {
+  timetoken?: string;
+  entry: MessageContentType;
+  meta?: {};
+}
+
+export interface FetchMessageHistoryResponse<MessageContentType> {
+  startTimeToken: number;
+  messages: HistoryResponseMessage<MessageContentType>[];
+  endTimeToken: number;
+}
 
 type FetchMessageHistoryRequest = ReturnType<
   typeof fetchingMessageHistory

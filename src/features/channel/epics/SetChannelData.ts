@@ -10,10 +10,13 @@ import {
   errorSettingChannelData,
   settingChannelData,
 } from 'pubnub-redux';
-import { SetChannelDataRequest } from 'pubnub-redux/dist/features/channel/ChannelDataActions';
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+type SetChannelDataRequest<
+  ChannelCustom extends Pubnub.ObjectCustom
+> = Pubnub.SetChannelMetadataParameters<ChannelCustom>;
 
 export const setChannelData = <
   ChannelCustom extends Pubnub.ObjectCustom,

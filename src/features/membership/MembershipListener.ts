@@ -2,13 +2,28 @@ import { Subscriber } from 'rxjs';
 import Pubnub from 'pubnub';
 
 import { MembershipActionType } from 'pubnub-redux';
-import {
-  MembershipListenerActions,
-  MembershipRemovedEventAction,
-  MembershipSetEventAction,
-  RemoveMembershipEventMessage,
-  SetMembershipEventMessage,
-} from 'pubnub-redux/dist/features/membership/MembershipActions';
+
+export interface MembershipRemovedEventAction {
+  type: typeof MembershipActionType.MEMBERSHIP_REMOVED_EVENT;
+  payload: RemoveMembershipEventMessage;
+}
+type RemoveMembershipEventMessage = Pubnub.RemoveMembershipEvent['message'];
+type SetMembershipEventMessage<
+  MembershipCustom extends Pubnub.ObjectCustom
+> = Pubnub.SetMembershipEvent<MembershipCustom>['message'];
+export interface MembershipSetEventAction<
+  MembershipCustom extends Pubnub.ObjectCustom
+> {
+  type: typeof MembershipActionType.MEMBERSHIP_SET_EVENT;
+  payload: SetMembershipEventMessage<MembershipCustom>;
+}
+
+export declare type MembershipListenerActions<
+  MembershipCustom extends Pubnub.ObjectCustom
+> =
+  | MembershipSetEventAction<MembershipCustom>
+  | MembershipRemovedEventAction
+  | MembershipSetEventAction<MembershipCustom>;
 
 const membershipSetEventRecieved = <
   MembershipCustom extends Pubnub.ObjectCustom

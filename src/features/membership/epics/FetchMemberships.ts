@@ -1,3 +1,4 @@
+import Pubnub from 'pubnub';
 import { Epic, ofType } from 'redux-observable';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
@@ -9,10 +10,14 @@ import {
   MembershipActionType,
   membershipsRetrieved,
 } from 'pubnub-redux';
-import { FetchMembershipsRequest } from 'pubnub-redux/dist/features/membership/MembershipActions';
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+export interface FetchMembershipsRequest
+  extends Pubnub.GetMembershipsParametersv2 {
+  uuid: string;
+}
 
 export const fetchMemberships = <Meta extends ActionMeta = {}>(
   request: FetchMembershipsRequest,

@@ -1,3 +1,4 @@
+import Pubnub from 'pubnub';
 import { Epic, ofType } from 'redux-observable';
 import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
@@ -9,10 +10,11 @@ import {
   errorFetchingAllChannelData,
   fetchingAllChannelData,
 } from 'pubnub-redux';
-import { FetchAllChannelDataRequest } from 'pubnub-redux/dist/features/channel/ChannelDataActions';
 
 import { PayloadAction } from '../../../foundations/createAction';
 import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+
+type FetchAllChannelDataRequest = Pubnub.GetAllMetadataParameters;
 
 export const fetchAllChannelData = <Meta extends ActionMeta = {}>(
   request: FetchAllChannelDataRequest = {},
