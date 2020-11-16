@@ -6,20 +6,13 @@ import {
   NetworkStatusResponse,
   networkUp,
 } from 'pubnub-redux';
+import { NetworkStatusCategory } from './NetworkStatusCategory.enum';
 
 export interface NetworkUpEventAction {
   type: typeof NetworkStatusActionType.NETWORK_UP_EVENT;
 }
 export interface NetworkDownEventAction {
   type: typeof NetworkStatusActionType.NETWORK_DOWN_EVENT;
-}
-
-declare enum NetworkStatusCategory {
-  PN_NETWORK_UP_CATEGORY = 'PNNetworkUpCategory',
-  PN_NETWORK_DOWN_CATEGORY = 'PNNetworkDownCategory',
-  PN_RECONNECTED_CATEGORY = 'PNReconnectedCategory',
-  PN_CONNECTED_CATEGORY = 'PNConnectedCategory',
-  PN_TIMEOUT_CATEGORY = 'PNTimeoutCategory',
 }
 
 export type NetworkStatusListenerActions =

@@ -3,11 +3,8 @@ import {
   SubscriptionStatusActionType,
   SubscriptionStatusResponse,
 } from 'pubnub-redux';
+import { SubscriptionStatusCategory } from './SubscriptionStatusCategory.enum';
 
-declare enum SubscriptionStatusCategory {
-  PN_CONNECTED_CATEGORY = 'PNConnectedCategory',
-  PN_RECONNECTED_CATEGORY = 'PNReconnectedCategory',
-}
 export interface ReconnectedAction {
   type: typeof SubscriptionStatusActionType.RECONNECTED_EVENT;
   payload: SubscriptionStatusResponse;
