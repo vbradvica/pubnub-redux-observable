@@ -1,22 +1,56 @@
-import Pubnub from 'pubnub';
+import {
+  RemovingChannelMembersAction,
+  ChannelMembersRemovedAction,
+  ErrorRemovingChannelMembersAction,
+  SetChannelMembersError,
+  SetChannelMembersSuccess,
+  RemoveChannelMembersRequest,
+} from '../ChannelMembersActions';
+import { ChannelMembersActionType } from '../ChannelMembersActionType.enum';
+import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
+import { ObjectsCustom } from 'foundations/ObjectsCustom';
+import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import {
-  ActionMeta,
-  ChannelMembersActionType,
-  channelMembersRemoved,
-  errorRemovingChannelMembers,
-  removingChannelMembers,
-} from 'pubnub-redux';
+export const removingChannelMembers = <Meta extends ActionMeta>(
+  payload: RemoveChannelMembersRequest,
+  meta?: Meta
+): RemovingChannelMembersAction<Meta> => ({
+  type: ChannelMembersActionType.REMOVING_CHANNEL_MEMBERS,
+  payload,
+  meta,
+});
 
-import { PayloadAction } from '../../../foundations/createAction';
-import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+export const channelMembersRemoved = <
+  MembershipCustom extends ObjectsCustom,
+  UserCustom extends ObjectsCustom,
+  Meta extends ActionMeta
+>(
+  payload: SetChannelMembersSuccess<MembershipCustom, UserCustom>,
+  meta?: Meta
+): ChannelMembersRemovedAction<MembershipCustom, UserCustom, Meta> => ({
+  type: ChannelMembersActionType.CHANNEL_MEMBERS_REMOVED,
+  payload,
+  meta,
+});
 
-type RemoveChannelMembersRequest = Pubnub.RemoveChannelMembersParameters;
+export const errorRemovingChannelMembers = <
+  UserCustom extends ObjectsCustom,
+  Meta extends ActionMeta
+>(
+  payload: SetChannelMembersError<UserCustom>,
+  meta?: Meta
+): ErrorRemovingChannelMembersAction<UserCustom, Meta> => ({
+  type: ChannelMembersActionType.ERROR_REMOVING_CHANNEL_MEMBERS,
+  payload,
+  meta,
+  error: true,
+});
 
-export const removeChannelMembers = <Meta extends ActionMeta = {}>(
+export const removeChannelMembers = <Meta extends ActionMeta = AnyMeta>(
   request: RemoveChannelMembersRequest,
   meta: Meta
 ): PayloadAction<RemoveChannelMembersRequest, string, ActionMeta> => ({

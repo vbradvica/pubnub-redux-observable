@@ -20,7 +20,7 @@ import { setUserDataEpic } from './user/epics/SetUserData';
 import { fetchHereNowEpic } from './presence/epics/FetchHereNow';
 import { fetchPresenceStateEpic } from './presence/epics/FetchPresenceState';
 
-export const combinedEpics = combineEpics(
+export const commandsEpic = combineEpics(
   removeMembershipsEpic,
   fetchMembershipsEpic,
   setMembershipsEpic,

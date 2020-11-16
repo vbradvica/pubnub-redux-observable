@@ -1,12 +1,3 @@
-import { catchError, map, mergeMap } from 'rxjs/operators';
-import { Observable, of } from 'rxjs';
-
-import { ActionMeta } from 'pubnub-redux';
-import { Epic, ofType } from 'redux-observable';
-
-import { PayloadAction } from 'foundations/createAction';
-import { PubnubEpicDependencies } from 'foundations/EpicDependency';
-
 import {
   SubscribeToChannelRequest,
   SubscribingToChannelAction,
@@ -15,8 +6,14 @@ import {
   SubscribeToChannelError,
 } from '../ChannelActions';
 import { ChannelActionType } from '../ChannelActionType.enum';
+import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
+import { PayloadAction } from 'foundations/createAction';
+import { Epic, ofType } from 'redux-observable';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
+import { catchError, map, mergeMap } from 'rxjs/operators';
+import { Observable, of } from 'rxjs';
 
-export const subscribingChannel = <Meta extends ActionMeta = {}>(
+export const subscribingChannel = <Meta extends ActionMeta>(
   payload: SubscribeToChannelRequest,
   meta?: Meta
 ): SubscribingToChannelAction<Meta> => ({
@@ -25,7 +22,7 @@ export const subscribingChannel = <Meta extends ActionMeta = {}>(
   meta,
 });
 
-export const channelSubscribed = <Meta extends ActionMeta = {}>(
+export const channelSubscribed = <Meta extends ActionMeta>(
   payload: SubscribeToChannelRequest,
   meta?: Meta
 ): ChannelSubscribedAction<Meta> => ({
@@ -34,7 +31,7 @@ export const channelSubscribed = <Meta extends ActionMeta = {}>(
   meta,
 });
 
-export const errorSubscribingChannel = <Meta extends ActionMeta = {}>(
+export const errorSubscribingChannel = <Meta extends ActionMeta>(
   payload: SubscribeToChannelError,
   meta?: Meta
 ): ErrorSubscribingChannelAction<Meta> => ({
@@ -43,7 +40,7 @@ export const errorSubscribingChannel = <Meta extends ActionMeta = {}>(
   meta,
 });
 
-export const subscribeToChannel = <Meta extends ActionMeta = {}>(
+export const subscribeToChannel = <Meta extends ActionMeta = AnyMeta>(
   request: SubscribeToChannelRequest,
   meta: Meta
 ): PayloadAction<SubscribeToChannelRequest, string, ActionMeta> => ({

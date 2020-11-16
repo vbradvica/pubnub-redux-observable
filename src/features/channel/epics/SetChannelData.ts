@@ -1,26 +1,60 @@
-import Pubnub from 'pubnub';
+import {
+  SettingChannelDataAction,
+  ChannelDataSetAction,
+  ErrorSettingChannelDataAction,
+  SetChannelDataError,
+  SetChannelDataSuccess,
+  SetChannelDataRequest,
+} from '../ChannelDataActions';
+import { ChannelDataActionType } from '../ChannelDataActionType.enum';
+import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
+import { ObjectsCustom } from 'foundations/ObjectsCustom';
+import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import {
-  ActionMeta,
-  ChannelDataActionType,
-  channelDataSet,
-  errorSettingChannelData,
-  settingChannelData,
-} from 'pubnub-redux';
+export const settingChannelData = <
+  ChannelCustom extends ObjectsCustom,
+  Meta extends ActionMeta
+>(
+  payload: SetChannelDataRequest<ChannelCustom>,
+  meta?: Meta
+): SettingChannelDataAction<ChannelCustom, Meta> => ({
+  type: ChannelDataActionType.SETTING_CHANNEL_DATA,
+  payload,
+  meta,
+});
 
-import { PayloadAction } from '../../../foundations/createAction';
-import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+export const channelDataSet = <
+  ChannelCustom extends ObjectsCustom,
+  Meta extends ActionMeta
+>(
+  payload: SetChannelDataSuccess<ChannelCustom>,
+  meta?: Meta
+): ChannelDataSetAction<ChannelCustom, Meta> => ({
+  type: ChannelDataActionType.CHANNEL_DATA_SET,
+  payload,
+  meta,
+});
 
-type SetChannelDataRequest<
-  ChannelCustom extends Pubnub.ObjectCustom
-> = Pubnub.SetChannelMetadataParameters<ChannelCustom>;
+export const errorSettingChannelData = <
+  ChannelCustom extends ObjectsCustom,
+  Meta extends ActionMeta
+>(
+  payload: SetChannelDataError<ChannelCustom>,
+  meta?: Meta
+): ErrorSettingChannelDataAction<ChannelCustom, Meta> => ({
+  type: ChannelDataActionType.ERROR_SETTING_CHANNEL_DATA,
+  payload,
+  meta,
+  error: true,
+});
 
 export const setChannelData = <
-  ChannelCustom extends Pubnub.ObjectCustom,
-  Meta extends ActionMeta = {}
+  ChannelCustom extends ObjectsCustom,
+  Meta extends ActionMeta = AnyMeta
 >(
   request: SetChannelDataRequest<ChannelCustom>,
   meta: Meta

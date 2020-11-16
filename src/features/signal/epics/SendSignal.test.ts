@@ -1,5 +1,5 @@
 import Pubnub from 'pubnub';
-import { SignalActionType } from 'pubnub-redux';
+import { SignalActionType } from '../SignalActionType.enum';
 import { sendSignal, sendSignalEpic } from './SendSignal';
 import { createMockStore } from 'foundations/Test-utils';
 

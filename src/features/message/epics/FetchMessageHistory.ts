@@ -1,36 +1,52 @@
+import {
+  FetchMessageHistoryRequest,
+  FetchMessageHistoryResponse,
+  FetchMessageHistoryError,
+  FetchingMessageHistoryAction,
+  ErrorFetchingMessageHistoryAction,
+  MessageHistoryRetrievedAction,
+  FetchMessageHistorySuccess,
+} from '../../message/MessageActions';
+import { MessageActionType } from '../../message/MessageActionType.enum';
+import { ActionMeta } from 'foundations/ActionMeta';
 import Pubnub from 'pubnub';
+import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import {
-  MessageActionType,
-  ActionMeta,
-  fetchingMessageHistory,
-  messageHistoryRetrieved,
-  errorFetchingMessageHistory,
-} from 'pubnub-redux';
+export const fetchingMessageHistory = <Meta extends ActionMeta>(
+  payload: FetchMessageHistoryRequest,
+  meta?: Meta
+): FetchingMessageHistoryAction<Meta> => ({
+  type: MessageActionType.FETCHING_MESSAGE_HISTORY,
+  payload,
+  meta,
+});
 
-import { PayloadAction } from '../../../foundations/createAction';
-import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+export const messageHistoryRetrieved = <
+  MessageContentType,
+  Meta extends ActionMeta
+>(
+  payload: FetchMessageHistorySuccess<MessageContentType>,
+  meta?: Meta
+): MessageHistoryRetrievedAction<MessageContentType, Meta> => ({
+  type: MessageActionType.MESSAGE_HISTORY_RETRIEVED,
+  payload,
+  meta,
+});
 
-export interface HistoryResponseMessage<MessageContentType> {
-  timetoken?: string;
-  entry: MessageContentType;
-  meta?: {};
-}
+export const errorFetchingMessageHistory = <Meta extends ActionMeta>(
+  payload: FetchMessageHistoryError,
+  meta?: Meta
+): ErrorFetchingMessageHistoryAction<Meta> => ({
+  type: MessageActionType.ERROR_FETCHING_MESSAGE_HISTORY,
+  payload,
+  meta,
+});
 
-export interface FetchMessageHistoryResponse<MessageContentType> {
-  startTimeToken: number;
-  messages: HistoryResponseMessage<MessageContentType>[];
-  endTimeToken: number;
-}
-
-type FetchMessageHistoryRequest = ReturnType<
-  typeof fetchingMessageHistory
->['payload'];
-
-export const fetchMessageHistory = <Meta extends ActionMeta = {}>(
+export const fetchMessageHistory = <Meta extends ActionMeta>(
   request: FetchMessageHistoryRequest,
   meta: Meta
 ): PayloadAction<FetchMessageHistoryRequest, string, ActionMeta> => ({

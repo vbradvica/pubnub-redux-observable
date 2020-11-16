@@ -1,5 +1,5 @@
 import Pubnub from 'pubnub';
-import { MessageActionType } from 'pubnub-redux';
+import { MessageActionType } from '../MessageActionType.enum';
 import { sendMessage, sendMessageEpic } from './SendMessage';
 import { createMockStore } from 'foundations/Test-utils';
 

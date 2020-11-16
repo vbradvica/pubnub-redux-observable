@@ -1,16 +1,17 @@
 import { Subscriber } from 'rxjs';
-import { ErrorStatusActionType, ErrorStatusResponse } from 'pubnub-redux';
+import { ErrorStatusCategory } from './ErrorStatusCategory.enum';
+import { ErrorStatusActionType } from './ErrorStatusActionType.enum';
 import {
+  NetworkIssuesEventAction,
   AccessDeniedEventAction,
+  MalformedResponseEventAction,
   BadRequestEventAction,
   DecryptionErrorEventAction,
-  MalformedResponseEventAction,
-  NetworkIssuesEventAction,
-  RequestMessageCountExceedEventAction,
   TimeoutConnectionEventAction,
+  RequestMessageCountExceedEventAction,
   UnknownEventAction,
+  ErrorStatusResponse,
 } from './ErrorStatusActions';
-import { ErrorStatusCategory } from './ErrorStatusCategory.enum';
 
 export const networkIssues = (
   payload: ErrorStatusResponse
@@ -81,7 +82,7 @@ export const createErrorStatusListener = (
 ) => ({
   status: (payload: ErrorStatusResponse) => {
     switch (payload.category) {
-      case ErrorStatusCategory.PN_ACCES_DENIED_CATEGORY:
+      case ErrorStatusCategory.PN_ACCESS_DENIED_CATEGORY:
         observer.next(accessDenied(payload));
         break;
       case ErrorStatusCategory.PN_MALFORMED_RESPONSE_CATEGORY:

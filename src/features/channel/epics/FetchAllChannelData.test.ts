@@ -3,7 +3,7 @@ import {
   fetchAllChannelData,
   fetchAllChannelDataEpic,
 } from './FetchAllChannelData';
-import { ChannelDataActionType } from 'pubnub-redux';
+import { ChannelDataActionType } from '../ChannelDataActionType.enum';
 import { createMockStore } from 'foundations/Test-utils';
 
 function fixturePubnubFetchChannelsSuccess() {

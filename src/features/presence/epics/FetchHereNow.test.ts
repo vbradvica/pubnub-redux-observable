@@ -1,5 +1,5 @@
 import Pubnub from 'pubnub';
-import { PresenceActionType } from 'pubnub-redux';
+import { PresenceActionType } from '../PresenceActionType.enum';
 import { fetchHereNow, fetchHereNowEpic } from './FetchHereNow';
 import { createMockStore } from 'foundations/Test-utils';
 

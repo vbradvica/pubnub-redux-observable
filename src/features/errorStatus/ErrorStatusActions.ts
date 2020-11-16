@@ -1,4 +1,4 @@
-import { ErrorStatusActionType } from 'pubnub-redux';
+import { ErrorStatusActionType } from './ErrorStatusActionType.enum';
 import { ErrorStatusCategory } from './ErrorStatusCategory.enum';
 
 export interface ErrorStatusResponse {

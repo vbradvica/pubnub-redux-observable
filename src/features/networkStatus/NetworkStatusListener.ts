@@ -1,19 +1,19 @@
 import { Subscriber } from 'rxjs';
-
 import {
-  networkDown,
-  NetworkStatusActionType,
+  NetworkUpEventAction,
+  NetworkDownEventAction,
   NetworkStatusResponse,
-  networkUp,
-} from 'pubnub-redux';
+} from './NetworkStatusActions';
+import { NetworkStatusActionType } from './NetworkStatusActionType.enum';
 import { NetworkStatusCategory } from './NetworkStatusCategory.enum';
 
-export interface NetworkUpEventAction {
-  type: typeof NetworkStatusActionType.NETWORK_UP_EVENT;
-}
-export interface NetworkDownEventAction {
-  type: typeof NetworkStatusActionType.NETWORK_DOWN_EVENT;
-}
+export const networkUp = (): NetworkUpEventAction => ({
+  type: NetworkStatusActionType.NETWORK_UP_EVENT,
+});
+
+export const networkDown = (): NetworkDownEventAction => ({
+  type: NetworkStatusActionType.NETWORK_DOWN_EVENT,
+});
 
 export type NetworkStatusListenerActions =
   | NetworkUpEventAction

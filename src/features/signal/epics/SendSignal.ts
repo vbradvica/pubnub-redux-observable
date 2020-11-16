@@ -1,29 +1,58 @@
+import {
+  SendSignalRequest,
+  SendingSignalAction,
+  SignalSentAction,
+  SendSignalSuccess,
+  ErrorSendingSignalAction,
+  SendSignalError,
+} from '../SignalActions';
+import { SignalActionType } from '../SignalActionType.enum';
+import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
+import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import {
-  ActionMeta,
-  errorSendingSignal,
-  sendingSignal,
-  SignalActionType,
-  signalSent,
-} from 'pubnub-redux';
+export const sendingSignal = <
+  SignalContentType extends object,
+  Meta extends ActionMeta
+>(
+  payload: SendSignalRequest<SignalContentType>,
+  meta?: Meta
+): SendingSignalAction<SignalContentType, Meta> => ({
+  type: SignalActionType.SENDING_SIGNAL,
+  payload,
+  meta,
+});
 
-import { PayloadAction } from '../../../foundations/createAction';
-import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+export const signalSent = <
+  SignalContentType extends object,
+  Meta extends ActionMeta
+>(
+  payload: SendSignalSuccess<SignalContentType>,
+  meta?: Meta
+): SignalSentAction<SignalContentType, Meta> => ({
+  type: SignalActionType.SIGNAL_SENT,
+  payload,
+  meta,
+});
 
-export interface SignalRequestOptions<SignalContentType> {
-  message: SignalContentType;
-  channel: string;
-}
-type SendSignalRequest<SignalContentType> = SignalRequestOptions<
-  SignalContentType
->;
+export const errorSendingSignal = <
+  SignalContentType extends object,
+  Meta extends ActionMeta
+>(
+  payload: SendSignalError<SignalContentType>,
+  meta?: Meta
+): ErrorSendingSignalAction<SignalContentType, Meta> => ({
+  type: SignalActionType.ERROR_SENDING_SIGNAL,
+  payload,
+  meta,
+});
 
 export const sendSignal = <
   SignalContentType extends object = {},
-  Meta extends ActionMeta = {}
+  Meta extends ActionMeta = AnyMeta
 >(
   request: SendSignalRequest<SignalContentType>,
   meta: Meta

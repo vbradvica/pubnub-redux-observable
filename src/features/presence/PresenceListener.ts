@@ -1,46 +1,15 @@
 import { Subscriber } from 'rxjs';
 import Pubnub from 'pubnub';
-
-import { Presence, PresenceActionType, PresenceCategory } from 'pubnub-redux';
-
-export interface PresenceEventMessage<
-  ReceivedPresence extends Presence = Presence
-> {
-  action: string;
-  channel: string;
-  occupancy: number;
-  state?: ReceivedPresence['state'];
-  subscription?: string;
-  timestamp: number;
-  timetoken: string;
-  uuid: string;
-}
-
-export interface JoinEventAction {
-  type: typeof PresenceActionType.JOIN_EVENT;
-  payload: PresenceEventMessage;
-}
-
-export interface LeaveEventAction {
-  type: typeof PresenceActionType.LEAVE_EVENT;
-  payload: PresenceEventMessage;
-}
-
-export interface TimeoutEventAction {
-  type: typeof PresenceActionType.TIMEOUT_EVENT;
-  payload: PresenceEventMessage;
-}
-
-export interface StateChangeEventAction {
-  type: typeof PresenceActionType.STATE_CHANGE_EVENT;
-  payload: PresenceEventMessage;
-}
-
-export type PresenceListenerActions =
-  | JoinEventAction
-  | LeaveEventAction
-  | TimeoutEventAction
-  | StateChangeEventAction;
+import {
+  PresenceListenerActions,
+  JoinEventAction,
+  LeaveEventAction,
+  TimeoutEventAction,
+  StateChangeEventAction,
+  PresenceEventMessage,
+} from './PresenceActions';
+import { PresenceActionType } from './PresenceActionType.enum';
+import { PresenceCategory } from './PresenceCategory.enum';
 
 export const userJoin = (payload: PresenceEventMessage): JoinEventAction => ({
   type: PresenceActionType.JOIN_EVENT,

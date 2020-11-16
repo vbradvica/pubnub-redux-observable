@@ -1,22 +1,48 @@
-import Pubnub from 'pubnub';
+import {
+  ChannelDataRemovedAction,
+  RemovingChannelDataAction,
+  ErrorRemovingChannelDataAction,
+  RemoveChannelRequest,
+  RemoveChannelError,
+  RemoveChannelSuccess,
+} from '../ChannelDataActions';
+import { ChannelDataActionType } from '../ChannelDataActionType.enum';
+import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
 import { Epic, ofType } from 'redux-observable';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
+import { PayloadAction } from 'foundations/createAction';
 import { Observable, of } from 'rxjs';
 
-import {
-  ActionMeta,
-  ChannelDataActionType,
-  channelDataRemoved,
-  errorRemovingChannelData,
-  removingChannelData,
-} from 'pubnub-redux';
+export const removingChannelData = <Meta extends ActionMeta>(
+  payload: RemoveChannelRequest,
+  meta?: Meta
+): RemovingChannelDataAction<Meta> => ({
+  type: ChannelDataActionType.REMOVING_CHANNEL_DATA,
+  payload,
+  meta,
+});
 
-import { PayloadAction } from '../../../foundations/createAction';
-import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+export const channelDataRemoved = <Meta extends ActionMeta>(
+  payload: RemoveChannelSuccess,
+  meta?: Meta
+): ChannelDataRemovedAction<Meta> => ({
+  type: ChannelDataActionType.CHANNEL_DATA_REMOVED,
+  payload,
+  meta,
+});
 
-export declare type RemoveChannelRequest = Pubnub.RemoveChannelMetadataParameters;
+export const errorRemovingChannelData = <Meta extends ActionMeta>(
+  payload: RemoveChannelError,
+  meta?: Meta
+): ErrorRemovingChannelDataAction<Meta> => ({
+  type: ChannelDataActionType.ERROR_REMOVING_CHANNEL_DATA,
+  payload,
+  meta,
+  error: true,
+});
 
-export const removeChannelData = <Meta extends ActionMeta = {}>(
+export const removeChannelData = <Meta extends ActionMeta = AnyMeta>(
   request: RemoveChannelRequest,
   meta?: Meta
 ) => ({

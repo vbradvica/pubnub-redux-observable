@@ -1,26 +1,61 @@
-import Pubnub from 'pubnub';
+import {
+  SettingChannelMembersAction,
+  ChannelMembersSetAction,
+  ErrorSettingChannelMembersAction,
+  SetChannelMembersError,
+  SetChannelMembersSuccess,
+  SetChannelMembersRequest,
+} from '../ChannelMembersActions';
+import { ChannelMembersActionType } from '../ChannelMembersActionType.enum';
+import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
+import { ObjectsCustom } from 'foundations/ObjectsCustom';
+import { PayloadAction } from 'foundations/createAction';
 import { Observable, of } from 'rxjs';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Epic, ofType } from 'redux-observable';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 
-import {
-  ActionMeta,
-  ChannelMembersActionType,
-  channelMembersSet,
-  errorSettingChannelMembers,
-  settingChannelMembers,
-} from 'pubnub-redux';
+export const settingChannelMembers = <
+  UserCustom extends ObjectsCustom,
+  Meta extends ActionMeta
+>(
+  payload: SetChannelMembersRequest<UserCustom>,
+  meta?: Meta
+): SettingChannelMembersAction<UserCustom, Meta> => ({
+  type: ChannelMembersActionType.SETTING_CHANNEL_MEMBERS,
+  payload,
+  meta,
+});
 
-import { PayloadAction } from '../../../foundations/createAction';
-import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+export const channelMembersSet = <
+  MembershipCustom extends ObjectsCustom,
+  UserCustom extends ObjectsCustom,
+  Meta extends ActionMeta
+>(
+  payload: SetChannelMembersSuccess<MembershipCustom, UserCustom>,
+  meta?: Meta
+): ChannelMembersSetAction<MembershipCustom, UserCustom, Meta> => ({
+  type: ChannelMembersActionType.CHANNEL_MEMBERS_SET,
+  payload,
+  meta,
+});
 
-type SetChannelMembersRequest<
-  MembershipCustom extends Pubnub.ObjectCustom
-> = Pubnub.SetChannelMembersParameters<MembershipCustom>;
+export const errorSettingChannelMembers = <
+  UserCustom extends ObjectsCustom,
+  Meta extends ActionMeta
+>(
+  payload: SetChannelMembersError<UserCustom>,
+  meta?: Meta
+): ErrorSettingChannelMembersAction<UserCustom, Meta> => ({
+  type: ChannelMembersActionType.ERROR_SETTING_CHANNEL_MEMBERS,
+  payload,
+  meta,
+  error: true,
+});
 
 export const setChannelMembers = <
-  MembershipCustom extends Pubnub.ObjectCustom,
-  Meta extends ActionMeta = {}
+  MembershipCustom extends ObjectsCustom,
+  Meta extends ActionMeta = AnyMeta
 >(
   request: SetChannelMembersRequest<MembershipCustom>,
   meta: Meta

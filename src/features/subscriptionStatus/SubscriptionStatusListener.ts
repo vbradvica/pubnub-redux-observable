@@ -1,26 +1,27 @@
 import { Subscriber } from 'rxjs';
 import {
-  SubscriptionStatusActionType,
+  ReconnectedAction,
+  ConnectedAction,
   SubscriptionStatusResponse,
-} from 'pubnub-redux';
+} from './SubscribeStatusActions';
+import { SubscriptionStatusActionType } from './SubscriptionStatusActionType.enum';
 import { SubscriptionStatusCategory } from './SubscriptionStatusCategory.enum';
 
-export interface ReconnectedAction {
-  type: typeof SubscriptionStatusActionType.RECONNECTED_EVENT;
-  payload: SubscriptionStatusResponse;
-}
-export interface ConnectedAction {
-  type: typeof SubscriptionStatusActionType.CONNECTED_EVENT;
-  payload: SubscriptionStatusResponse;
-}
+export const reconnected = (
+  payload: SubscriptionStatusResponse
+): ReconnectedAction => ({
+  type: SubscriptionStatusActionType.RECONNECTED_EVENT,
+  payload,
+});
 
-export declare const reconnected: (
+export const connected = (
   payload: SubscriptionStatusResponse
-) => ReconnectedAction;
-export declare const connected: (
-  payload: SubscriptionStatusResponse
-) => ConnectedAction;
-export declare type SubscriptionStatusListenerActions =
+): ConnectedAction => ({
+  type: SubscriptionStatusActionType.CONNECTED_EVENT,
+  payload,
+});
+
+export type SubscriptionStatusListenerActions =
   | ReconnectedAction
   | ConnectedAction;
 

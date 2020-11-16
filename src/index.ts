@@ -1,327 +1,239 @@
 // Commands
-import {
+export {
+  removingMemberships,
   removeMemberships,
+  membershipsRemoved,
+  errorRemovingMemberships,
   removeMembershipsEpic,
 } from './features/membership/epics/RemoveMemberships';
-import {
+export {
   fetchMemberships,
+  fetchingMemberships,
+  membershipsRetrieved,
+  errorFetchingMemberships,
   fetchMembershipsEpic,
 } from './features/membership/epics/FetchMemberships';
-import {
+export {
   setMemberships,
+  settingMemberships,
+  membershipsSet,
+  errorSettingMemberships,
   setMembershipsEpic,
 } from './features/membership/epics/SetMemberships';
-import {
+export {
   fetchChannelMembers,
+  fetchingChannelMembers,
+  channelMembersRetrieved,
+  errorFetchingChannelMembers,
   fetchChannelMembersEpic,
 } from './features/members/epics/FetchChannelMembers';
-import {
+export {
   setChannelMembers,
+  settingChannelMembers,
+  channelMembersSet,
+  errorSettingChannelMembers,
   setChannelMembersEpic,
 } from './features/members/epics/SetChannelMembers';
-import {
+export {
   removeChannelMembers,
+  removingChannelMembers,
+  channelMembersRemoved,
+  errorRemovingChannelMembers,
   removeChannelMembersEpic,
 } from './features/members/epics/RemoveChannelMembers';
-import {
+export {
   sendMessage,
+  sendingMessage,
+  messageSent,
+  errorSendingMessage,
   sendMessageEpic,
 } from './features/message/epics/SendMessage';
-import { sendSignal, sendSignalEpic } from './features/signal/epics/SendSignal';
-import {
+export {
+  sendSignal,
+  sendingSignal,
+  signalSent,
+  errorSendingSignal,
+  sendSignalEpic,
+} from './features/signal/epics/SendSignal';
+export {
   fetchMessageHistory,
+  fetchingMessageHistory,
+  messageHistoryRetrieved,
+  errorFetchingMessageHistory,
   fetchMessageHistoryEpic,
 } from './features/message/epics/FetchMessageHistory';
-import {
+export {
   removeChannelData,
+  removingChannelData,
+  channelDataRemoved,
+  errorRemovingChannelData,
   removeChannelDataEpic,
 } from './features/channel/epics/RemoveChannelData';
-import {
+export {
   fetchChannelData,
+  fetchingChannelData,
+  channelDataRetrieved,
+  errorFetchingChannelData,
   fetchChannelDataEpic,
 } from './features/channel/epics/FetchChannelData';
-import {
+export {
   fetchAllChannelData,
+  fetchingAllChannelData,
+  allChannelDataRetrieved,
+  errorFetchingAllChannelData,
   fetchAllChannelDataEpic,
 } from './features/channel/epics/FetchAllChannelData';
-import {
+export {
   setChannelData,
+  settingChannelData,
+  channelDataSet,
+  errorSettingChannelData,
   setChannelDataEpic,
 } from './features/channel/epics/SetChannelData';
-import {} from './features/channel/ChannelActions';
-import {
+export {
   subscribeToChannel,
   subscribingChannel,
   channelSubscribed,
   errorSubscribingChannel,
   subscribeToChannelEpic,
 } from './features/channel/epics/SubscribeToChannel';
-import { ChannelActionType } from './features/channel/ChannelActionType.enum';
-import {
+export {
   removeUserData,
+  removingUserData,
+  UserDataRemoved,
+  errorRemovingUserData,
   removeUserDataEpic,
 } from './features/user/epics/RemoveUserData';
-import {
+export {
   fetchUserData,
+  fetchingUserData,
+  UserDataRetrieved,
+  errorFetchingUserData,
   fetchUserDataEpic,
 } from './features/user/epics/FetchUserData';
-import {
+export {
   fetchAllUserData,
+  fetchingAllUserData,
+  allUserDataRetrieved,
+  errorFetchingAllUserData,
   fetchAllUserDataEpic,
 } from './features/user/epics/FetchAllUserData';
-import {
+export {
   setUserData,
+  settingUserData,
+  UserDataSet,
+  errorSettingUserData,
   setUserDataEpic,
 } from './features/user/epics/SetUserData';
-import {
+export {
   fetchHereNow,
+  fetchingHereNow,
+  hereNowRetrieved,
+  errorFetchingHereNow,
   fetchHereNowEpic,
 } from './features/presence/epics/FetchHereNow';
-import {
+export {
   fetchPresenceState,
+  fetchingPresenceState,
+  presenceStateRetrieved,
+  errorFetchingPresenceState,
   fetchPresenceStateEpic,
 } from './features/presence/epics/FetchPresenceState';
-import { combinedEpics } from './features';
+export { commandsEpic } from './features';
 // Listeners
-import { createUserDataListener } from './features/user/UserDataListener';
-import { createChannelDataListener } from './features/channel/ChannelDataListener';
-import { createMembershipListener } from './features/membership/MembershipListener';
-import { createPubNubListener } from './features/subscribe/createPubNubListener';
-import {
+export { createUserDataListener } from './features/user/UserDataListener';
+export { createChannelDataListener } from './features/channel/ChannelDataListener';
+export { createMembershipListener } from './features/membership/MembershipListener';
+export { createPubNubListener } from './features/subscribe/createPubNubListener';
+export {
   messageReceived,
   createMessageListener,
 } from './features/message/MessageListener';
-import {
+export {
   userJoin,
   userLeave,
   userStateChange,
   userTimeout,
   createPresenceListener,
 } from './features/presence/PresenceListener';
-import {
+export {
   signalReceived,
   createSignalListener,
 } from './features/signal/SignalListener';
-import { combineListeners } from './foundations/CombineListeners';
-import {
+export { combineListeners } from './foundations/CombineListeners';
+export {
+  networkIssues,
   accessDenied,
+  malformedResponse,
   badRequest,
   decryptionError,
-  malformedResponse,
-  networkIssues,
-  requestMessageCountExceeded,
   timeoutConnection,
+  requestMessageCountExceeded,
   unknown,
   createErrorStatusListener,
 } from './features/errorStatus/ErrorStatusListener';
-import { createNetworkStatusListener } from './features/networkStatus/NetworkStatusListener';
-import {
+export {
+  networkUp,
+  networkDown,
+  createNetworkStatusListener,
+} from './features/networkStatus/NetworkStatusListener';
+export {
   connected,
   reconnected,
   createSubscriptionStatusListener,
 } from './features/subscriptionStatus/SubscriptionStatusListener';
-// LifeCycle
-import { LifecycleActionType } from './foundations/LifecycleActionType.enum';
-import {
-  pubnubLifecycleEpic,
-  setupPubnub,
-} from './foundations/LifecycleActions';
-import {
-  createEpicDependency,
-  PubnubEpicDependencies,
-} from './foundations/EpicDependency';
-
-import { MessageActionType } from 'pubnub-redux';
-export interface MessageReceivedAction<MessageType> {
-  type: typeof MessageActionType.MESSAGE_RECEIVED;
-  payload: MessageType;
-}
-
+// Reducers
+export { createMessageReducer } from './features/message/MessageReducer';
+export { createSignalReducer } from './features/signal/SignalReducer';
+export { createPresenceReducer } from './features/presence/PresenceReducer';
+export { createNetworkStatusReducer } from './features/networkStatus/NetworkStatusReducer';
+export { createUserDataReducer } from './features/user/UserDataReducer';
+export { createUsersListReducer } from './features/user/UsersListReducer';
+export { createChannelDataReducer } from './features/channel/ChannelDataReducer';
+export { createChannelsListReducer } from './features/channel/ChannelsListReducer';
+export { createMembershipReducer } from './features/membership/MembershipReducer';
+export { createChannelMembersReducer } from './features/members/ChannelMembersReducer';
+export { createChannelMembersCountReducer } from './features/members/ChannelMembersCountReducer';
+// Types
+export { UserData } from './features/user/UserDataActions';
+export { Channel } from './features/channel/ChannelDataActions';
 export {
-  // Commands
-  removingMemberships,
-  membershipsRemoved,
-  errorRemovingMemberships,
-  fetchingMemberships,
-  membershipsRetrieved,
-  errorFetchingMemberships,
-  settingMemberships,
-  membershipsSet,
-  errorSettingMemberships,
-  fetchingChannelMembers,
-  channelMembersRetrieved,
-  errorFetchingChannelMembers,
-  settingChannelMembers,
-  channelMembersSet,
-  errorSettingChannelMembers,
-  removingChannelMembers,
-  channelMembersRemoved,
-  errorRemovingChannelMembers,
-  sendingMessage,
-  messageSent,
-  errorSendingMessage,
-  sendingSignal,
-  signalSent,
-  errorSendingSignal,
-  fetchingMessageHistory,
-  messageHistoryRetrieved,
-  errorFetchingMessageHistory,
-  fetchingHereNow,
-  hereNowRetrieved,
-  errorFetchingHereNow,
-  fetchingPresenceState,
-  presenceStateRetrieved,
-  errorFetchingPresenceState,
-  // Action Creators
-  removingChannelData,
-  channelDataRemoved,
-  errorRemovingChannelData,
-  fetchingChannelData,
-  channelDataRetrieved,
-  errorFetchingChannelData,
-  fetchingAllChannelData,
-  allChannelDataRetrieved,
-  errorFetchingAllChannelData,
-  settingChannelData,
-  channelDataSet,
-  errorSettingChannelData,
-  removingUserData,
-  UserDataRemoved,
-  errorRemovingUserData,
-  fetchingUserData,
-  UserDataRetrieved,
-  errorFetchingUserData,
-  fetchingAllUserData,
-  allUserDataRetrieved,
-  errorFetchingAllUserData,
-  settingUserData,
-  UserDataSet,
-  errorSettingUserData,
-  createMessageReducer,
-  createSignalReducer,
-  createPresenceReducer,
-  createNetworkStatusReducer,
-  createUserDataReducer,
-  createUsersListReducer,
-  createChannelDataReducer,
-  createChannelsListReducer,
-  createMembershipReducer,
-  createChannelMembersReducer,
-  createChannelMembersCountReducer,
-  networkUp,
-  networkDown,
-  ActionMeta,
-  Channel,
-  UserData,
   Message,
   MessageRequestOptions,
-  Signal,
-  SignalRequestOptions,
+} from './features/message/MessageActions';
+export { Signal, SignalRequestOptions } from './features/signal/SignalActions';
+export {
   Presence,
   PresenceStateRequest,
   HereNowRequest,
-  ErrorStatusResponse,
-  NetworkStatusResponse,
-  SubscriptionStatusResponse,
-  // Action Types
-  SignalActionType,
-  MessageActionType,
-  PresenceActionType,
-  UserDataActionType,
-  ChannelDataActionType,
-  MembershipActionType,
-  ChannelMembersActionType,
-  SubscriptionStatusActionType,
-  NetworkStatusActionType,
-  ErrorStatusActionType,
-  // Enums
-  PresenceCategory,
-} from 'pubnub-redux';
-
+} from './features/presence/PresenceActions';
+export { ActionMeta } from './foundations/ActionMeta';
+export { PubnubThunkContext } from './foundations/ThunkTypes';
 export {
-  // Lifecycle
-  LifecycleActionType,
+  PubnubEpicDependencies,
+  createEpicDependency,
+} from './foundations/EpicDependency';
+// Response Types
+export { ErrorStatusResponse } from './features/errorStatus/ErrorStatusActions';
+export { NetworkStatusResponse } from './features/networkStatus/NetworkStatusActions';
+export { SubscriptionStatusResponse } from './features/subscriptionStatus/SubscribeStatusActions';
+// Action Types
+export { SignalActionType } from './features/signal/SignalActionType.enum';
+export { MessageActionType } from './features/message/MessageActionType.enum';
+export { PresenceActionType } from './features/presence/PresenceActionType.enum';
+export { UserDataActionType } from './features/user/UserDataActionType.enum';
+export { ChannelActionType } from './features/channel/ChannelActionType.enum';
+export { ChannelDataActionType } from './features/channel/ChannelDataActionType.enum';
+export { MembershipActionType } from './features/membership/MembershipActionType.enum';
+export { ChannelMembersActionType } from './features/members/ChannelMembersActionType.enum';
+export { SubscriptionStatusActionType } from './features/subscriptionStatus/SubscriptionStatusActionType.enum';
+export { NetworkStatusActionType } from './features/networkStatus/NetworkStatusActionType.enum';
+export { ErrorStatusActionType } from './features/errorStatus/ErrorStatusActionType.enum';
+export { PresenceCategory } from './features/presence/PresenceCategory.enum';
+// LifeCycle
+export { LifecycleActionType } from './foundations/LifecycleActionType.enum';
+export {
   pubnubLifecycleEpic,
   setupPubnub,
-  // Actions
-  subscribingChannel,
-  channelSubscribed,
-  errorSubscribingChannel,
-  // Commands
-  subscribeToChannel,
-  removeMemberships,
-  fetchMemberships,
-  setMemberships,
-  fetchChannelMembers,
-  setChannelMembers,
-  removeChannelMembers,
-  sendMessage,
-  sendSignal,
-  fetchMessageHistory,
-  fetchHereNow,
-  fetchPresenceState,
-  // Epics
-  subscribeToChannelEpic,
-  combinedEpics,
-  removeMembershipsEpic,
-  fetchMembershipsEpic,
-  setMembershipsEpic,
-  fetchChannelMembersEpic,
-  setChannelMembersEpic,
-  removeChannelMembersEpic,
-  sendMessageEpic,
-  sendSignalEpic,
-  fetchMessageHistoryEpic,
-  fetchHereNowEpic,
-  fetchPresenceStateEpic,
-  removeChannelDataEpic,
-  fetchAllChannelDataEpic,
-  fetchAllUserDataEpic,
-  fetchChannelDataEpic,
-  fetchUserDataEpic,
-  removeUserDataEpic,
-  setChannelDataEpic,
-  setUserDataEpic,
-  // Listeners
-  createPubNubListener,
-  createMembershipListener,
-  createMessageListener,
-  createPresenceListener,
-  createSignalListener,
-  createChannelDataListener,
-  createNetworkStatusListener,
-  createSubscriptionStatusListener,
-  createErrorStatusListener,
-  createUserDataListener,
-  combineListeners,
-  // Action Creators
-  removeChannelData,
-  fetchChannelData,
-  fetchAllChannelData,
-  setChannelData,
-  removeUserData,
-  fetchUserData,
-  fetchAllUserData,
-  setUserData,
-  connected,
-  reconnected,
-  messageReceived,
-  userJoin,
-  userLeave,
-  userStateChange,
-  userTimeout,
-  signalReceived,
-  accessDenied,
-  badRequest,
-  decryptionError,
-  malformedResponse,
-  networkIssues,
-  requestMessageCountExceeded,
-  timeoutConnection,
-  unknown,
-  // Action Types
-  ChannelActionType,
-  // Epics
-  createEpicDependency,
-  PubnubEpicDependencies,
-};
+} from './foundations/LifecycleActions';
+export { MessageReceivedAction } from 'features/message/MessageActions';

@@ -1,25 +1,53 @@
-import Pubnub from 'pubnub';
+import {
+  FetchingMembershipsAction,
+  MembershipsRetrievedAction,
+  FetchMembershipsSuccess,
+  ErrorFetchingMembershipsAction,
+  FetchMembershipsError,
+  FetchMembershipsRequest,
+} from '../MembershipActions';
+import { MembershipActionType } from '../MembershipActionType.enum';
+import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
+import { ObjectsCustom } from 'foundations/ObjectsCustom';
+import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import {
-  ActionMeta,
-  errorFetchingMemberships,
-  fetchingMemberships,
-  MembershipActionType,
-  membershipsRetrieved,
-} from 'pubnub-redux';
+export const fetchingMemberships = <Meta extends ActionMeta>(
+  payload: FetchMembershipsRequest,
+  meta?: Meta
+): FetchingMembershipsAction<Meta> => ({
+  type: MembershipActionType.FETCHING_MEMBERSHIPS,
+  payload,
+  meta,
+});
 
-import { PayloadAction } from '../../../foundations/createAction';
-import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+export const membershipsRetrieved = <
+  MembershipCustom extends ObjectsCustom,
+  ChannelCustom extends ObjectsCustom,
+  Meta extends ActionMeta
+>(
+  payload: FetchMembershipsSuccess<MembershipCustom, ChannelCustom>,
+  meta?: Meta
+): MembershipsRetrievedAction<MembershipCustom, ChannelCustom, Meta> => ({
+  type: MembershipActionType.MEMBERSHIPS_RETRIEVED,
+  payload,
+  meta,
+});
 
-export interface FetchMembershipsRequest
-  extends Pubnub.GetMembershipsParametersv2 {
-  uuid: string;
-}
+export const errorFetchingMemberships = <Meta extends ActionMeta>(
+  payload: FetchMembershipsError,
+  meta?: Meta
+): ErrorFetchingMembershipsAction<Meta> => ({
+  type: MembershipActionType.ERROR_FETCHING_MEMBERSHIPS,
+  payload,
+  meta,
+  error: true,
+});
 
-export const fetchMemberships = <Meta extends ActionMeta = {}>(
+export const fetchMemberships = <Meta extends ActionMeta = AnyMeta>(
   request: FetchMembershipsRequest,
   meta: Meta
 ): PayloadAction<FetchMembershipsRequest, string, ActionMeta> => ({

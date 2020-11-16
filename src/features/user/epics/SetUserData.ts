@@ -1,26 +1,57 @@
-import Pubnub from 'pubnub';
+import {
+  SettingUserDataAction,
+  UserDataSetAction,
+  ErrorSettingUserDataAction,
+  UserDataError,
+  UserDataSuccess,
+  SetUserDataRequest,
+} from '../UserDataActions';
+import { UserDataActionType } from '../UserDataActionType.enum';
+import { ActionMeta, AnyMeta } from 'foundations/ActionMeta';
+import { ObjectsCustom } from 'foundations/ObjectsCustom';
+import { PayloadAction } from 'foundations/createAction';
 import { Epic, ofType } from 'redux-observable';
+import { PubnubEpicDependencies } from 'foundations/EpicDependency';
 import { catchError, map, mergeMap } from 'rxjs/operators';
 import { Observable, of } from 'rxjs';
 
-import {
-  ActionMeta,
-  errorSettingUserData,
-  settingUserData,
-  UserDataActionType,
-  UserDataSet,
-} from 'pubnub-redux';
+export const settingUserData = <
+  UserCustom extends ObjectsCustom,
+  Meta extends ActionMeta
+>(
+  payload: SetUserDataRequest<UserCustom>,
+  meta?: Meta
+): SettingUserDataAction<Meta> => ({
+  type: UserDataActionType.SETTING_USER_DATA,
+  payload,
+  meta,
+});
 
-import { PayloadAction } from '../../../foundations/createAction';
-import { PubnubEpicDependencies } from '../../../foundations/EpicDependency';
+export const UserDataSet = <
+  UserCustom extends ObjectsCustom,
+  Meta extends ActionMeta
+>(
+  payload: UserDataSuccess<UserCustom>,
+  meta?: Meta
+): UserDataSetAction<UserCustom, Meta> => ({
+  type: UserDataActionType.USER_DATA_SET,
+  payload,
+  meta,
+});
 
-export declare type SetUserDataRequest<
-  UserCustom extends Pubnub.ObjectCustom
-> = Pubnub.SetUUIDMetadataParameters<UserCustom>;
+export const errorSettingUserData = <Meta extends ActionMeta>(
+  payload: UserDataError,
+  meta?: Meta
+): ErrorSettingUserDataAction<Meta> => ({
+  type: UserDataActionType.ERROR_SETTING_USER_DATA,
+  payload,
+  meta,
+  error: true,
+});
 
 export const setUserData = <
-  UserCustom extends Pubnub.ObjectCustom,
-  Meta extends ActionMeta = {}
+  UserCustom extends ObjectsCustom,
+  Meta extends ActionMeta = AnyMeta
 >(
   request: SetUserDataRequest<UserCustom>,
   meta: Meta
