@@ -2,7 +2,7 @@ import Pubnub from 'pubnub';
 import { Subscriber } from 'rxjs';
 
 import { Signal, SignalActionType } from 'pubnub-redux';
-declare const signalReceived: <SignalType extends Signal>(
+export declare const signalReceived: <SignalType extends Signal>(
   payload: SignalType
 ) => SignalReceivedAction<SignalType>;
 

@@ -87,13 +87,39 @@ import { createUserDataListener } from './features/user/UserDataListener';
 import { createChannelDataListener } from './features/channel/ChannelDataListener';
 import { createMembershipListener } from './features/membership/MembershipListener';
 import { createPubNubListener } from './features/subscribe/createPubNubListener';
-import { createMessageListener } from './features/message/MessageListener';
-import { createPresenceListener } from './features/presence/PresenceListener';
-import { createSignalListener } from './features/signal/SignalListener';
+import {
+  messageReceived,
+  createMessageListener,
+} from './features/message/MessageListener';
+import {
+  userJoin,
+  userLeave,
+  userStateChange,
+  userTimeout,
+  createPresenceListener,
+} from './features/presence/PresenceListener';
+import {
+  signalReceived,
+  createSignalListener,
+} from './features/signal/SignalListener';
 import { combineListeners } from './foundations/CombineListeners';
-import { createErrorStatusListener } from './features/errorStatus/ErrorStatusListener';
+import {
+  accessDenied,
+  badRequest,
+  decryptionError,
+  malformedResponse,
+  networkIssues,
+  requestMessageCountExceeded,
+  timeoutConnection,
+  unknown,
+  createErrorStatusListener,
+} from './features/errorStatus/ErrorStatusListener';
 import { createNetworkStatusListener } from './features/networkStatus/NetworkStatusListener';
-import { createSubscriptionStatusListener } from './features/subscriptionStatus/SubscriptionStatusListener';
+import {
+  connected,
+  reconnected,
+  createSubscriptionStatusListener,
+} from './features/subscriptionStatus/SubscriptionStatusListener';
 // LifeCycle
 import { LifecycleActionType } from './foundations/LifecycleActionType.enum';
 import {
@@ -182,18 +208,8 @@ export {
   createMembershipReducer,
   createChannelMembersReducer,
   createChannelMembersCountReducer,
-  networkIssues,
-  accessDenied,
-  malformedResponse,
-  badRequest,
-  decryptionError,
-  timeoutConnection,
-  requestMessageCountExceeded,
-  unknown,
   networkUp,
   networkDown,
-  connected,
-  reconnected,
   ActionMeta,
   Channel,
   UserData,
@@ -287,6 +303,22 @@ export {
   fetchUserData,
   fetchAllUserData,
   setUserData,
+  connected,
+  reconnected,
+  messageReceived,
+  userJoin,
+  userLeave,
+  userStateChange,
+  userTimeout,
+  signalReceived,
+  accessDenied,
+  badRequest,
+  decryptionError,
+  malformedResponse,
+  networkIssues,
+  requestMessageCountExceeded,
+  timeoutConnection,
+  unknown,
   // Action Types
   ChannelActionType,
   // Epics

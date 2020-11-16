@@ -37,7 +37,6 @@
     "deep-freeze": "0.0.1",
     "eslint": "^6.8.0",
     "husky": "^3.1.0",
-    "pubnub": "^4.28.3",
     "redux": "^4.0.4",
     "redux-mock-store": "^1.5.4",
     "tsdx": "^0.13.2",
@@ -45,7 +44,7 @@
     "typescript": "^3.7.3"
   },
   "peerDependencies": {
-    "pubnub": "^4.28.3",
+    "pubnub": "^4.29.9",
     "redux": "^4.0.4",
     "redux-observable": "^1.2.0",
     "rxjs": "^6.5.0"
